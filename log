@@ -1,0 +1,33 @@
+$global = -1
+
+def log(description, &block)
+	
+	$global += 1
+	tab = "	"
+
+	puts tab * $global + "Beginning \"" + description + "\"..."
+	value = yield.to_s
+	puts tab * $global + "...\"" + description + "\ finished, returning: " + value
+
+	$global -= 1
+end
+
+
+outer = Proc.new do
+
+	little = Proc.new do
+		5
+	end
+
+	another = Proc.new do
+		"I like Thai food!"
+	end
+
+	log("some little block", &little)
+	log("yet another block", &another)
+
+	false
+
+end
+
+log("outer block", &outer)
