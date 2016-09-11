@@ -1,0 +1,21 @@
+EN:
+  welcome: "Welcome to Mortgage Calculator!"
+  loan_amount: "What is the loan amount?"
+  input_error: "Wrong input. Please use a positive number"
+  apr_input: "What is the Annual Percentage Rate?"
+  years_input: "What's the loan duration in years?"
+  years_error: "Wrong input. Please use a whole number"
+  again: "Would you like to use the calculator again? ('Y' to continue, 'N' to exit)"
+  answer_error: "Wrong input. Please choose 'Y' to continue or 'N' to exit"
+  thanks: "Thank you for using the Mortgage Calculator!"
+
+PL:
+  welcome: "Witamy w kalkulatorze hipoteki!"
+  loan_amount: "Jaka jest kwota pozyczki?"
+  input_error: "Prosze wpisz dodatnia cyfre"
+  apr_input: "Jaka jest roczna stopa oprocentowania?"
+  years_input: "Jaka jest dlugosc pozyczki w latach?"
+  years_error: "Prosze wpisz calkowita, dodatnia liczbe"
+  again: "Czy chcialbys jeszcze raz skorzystac z kalkulatora?"
+  answer_error: "Prosze wybierz 'Y', zeby kontynuowac lub 'N', zeby wyjsc"
+  thanks: "Dziekujemy za skorzystanie z kalkulatora!"
