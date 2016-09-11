@@ -102,7 +102,7 @@ loop do
   loop do
     if answer != "Y" && answer != "N"
       prompt('answer_error')
-      answer = gets_input()
+      answer = gets_input.upcase()
     else
       break
     end
