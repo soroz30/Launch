@@ -74,15 +74,12 @@ prompt('welcome')
 
 loop do
   prompt('loan_amount')
-
   loan_amount = input_and_validation
 
   prompt('apr_input')
-
   apr_rate = input_and_validation
 
   prompt('years_input')
-
   years = years_input_and_validation
 
   monthly_payment = monthly_payment(loan_amount, apr_rate, years)
