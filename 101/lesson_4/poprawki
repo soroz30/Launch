@@ -1,0 +1,92 @@
+* przekazuje a,b,c zamiast [a,b,c]
+computer places piece formula
+place piece i alternate player formula
+display points
+logika current player
+
+https://github.com/menachemkorf/launchschool-programming-foundations/blob/master/lesson_4/tictactoe.rb
+https://launchschool.com/posts/4a554cca
+
+def computer_places_piece!(brd)
+  square =  computer_winning_square(brd) ||
+            player_winning_square(brd) ||
+            empty_squares(brd).select { |n| n == 5 }.first ||
+            empty_squares(brd).sample
+
+  brd[square] = COMPUTER_MARKER
+end
+
+^ uzyc or zamiast tego co u mnie, zmienic find_optimal_computer_move na te dwie nazwy
+
+square = computer_offense(brd
+square ||= computer_defense(brd, square) 
+square ||= 5 if empty_squares(brd).include?(5)
+square ||= empty_squares(brd).sample 
+
+result = method_1 
+result = method_2 unless result
+result = method_3 unless result
+
+^ inna opcja
+
+def count_markers_in_line(brd, line, marker)
+  brd.values_at(*line).count(marker)
+end
+
+^ to mozna dac ewentualnie
+
+def play_again
+  answer = ''
+  loop do
+    prompt("Do you want to play again? (y/n)")
+    answer = gets.chomp.downcase
+    break if VALID_ANSWERS.include?(answer)
+    prompt("Invalid option.")
+  end
+  answer == 'y'
+end
+
+^ to na koniec dac
+
+
+def detect_winner(board)
+  WINNING_LINES.each do |line|
+    return 'Player' if board.values_at(*line).count(PLAYER_MAKER) == 3
+    return 'Computer' if board.values_at(*line).count(COMPUTER_MARKER) == 3
+  end
+  nil
+end
+
+^ skrocenie detect winner
+
+Moze WINNINGLINES each do w jakas metode?
+
+system 'clear' || system 'cls'
+
+
+def find_at_risk_square(line, board, marker)
+  return unless board.values_at(*line).count(marker) == 2
+  board.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+end
+
+^ skrocenie, tylko chyba trzeba dodac nil
+
+https://github.com/holdenhinkle/prog_and_backend_dev/blob/master/lesson4/ttt.rb
+
+^ ew. wybor markerow
+
+https://github.com/adam-mrachek/launch-school-101/blob/master/lesson_4/tictactoe.rb
+
+^ excellent work
+
+current_player =
+  case TURN_SETTINGS
+  when "player"   then "player"
+  when "computer" then "computer"
+  when "choose"
+    some_method_that_returns_who_starts_first
+  else
+    "player"
+  end
+
+^ ladniejsze zapisanie currentplayer
