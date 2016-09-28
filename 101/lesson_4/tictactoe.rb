@@ -13,9 +13,10 @@ def prompt(msg)
 end
 
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-def display_board(brd)
+def display_board(brd, starting_player)
   system 'clear' || system(cls)
   puts "You're a #{PLAYER_MARKER}. Computer is a #{COMPUTER_MARKER}"
+  puts "#{starting_player} plays first"
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -150,7 +151,7 @@ def play_again?
     prompt('That\'s not a valid answer, please select y to play' \
           ' or n to exit')
   end
-  answer == 'y' ? true : false
+  answer == 'y'
 end
 
 loop do
@@ -178,13 +179,13 @@ loop do
     current_player = starting_player
 
     loop do
-      display_board(board)
+      display_board(board, starting_player)
       place_piece!(board, current_player)
       current_player = alternate_player(current_player)
       break if end_round?(board)
     end
 
-    display_board(board)
+    display_board(board, starting_player)
 
     if someone_won?(board)
       prompt "#{detect_round_winner(board)} won!"
