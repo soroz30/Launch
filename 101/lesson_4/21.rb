@@ -21,23 +21,23 @@ def prompt(message)
   puts("=> #{message}")
 end
 
-def deal_cards
+def deal_card
   "#{VALUES.keys.sample} of #{SUITS.sample}"
 end
 
-def add_unique_card(deck)
+def unique_card(deck)
   card = ''
   loop do
-    card = deal_cards
+    card = deal_card
     break if deck.none? { |_, v| v.include?(card) }
   end
   card
 end
 
-def first_shuffle
+def initial_deal
   deck = { Player: [], Dealer: [] }
   deck.keys.each do |key|
-    (0..1).each { |_| deck[key].push(add_unique_card(deck)) }
+    (0..1).each { |_| deck[key].push(unique_card(deck)) }
   end
   deck
 end
@@ -56,19 +56,22 @@ end
 
 def sum_points(players_cards, players_points, player)
   sum = 0
+  m = /^\w+/
   players_cards[player].each do |card|
-    card_name = card.match(/^\w+/)[0]
+    card_name = card.match(m)[0]
     value = VALUES[card_name.to_sym]
-    if card_name == "Ace" && sum > 10
-      value = 1
-    end
     sum += value
+  end
+  if sum > 21
+    players_cards[player].select {|card| card.match(m)[0] == "Ace"}.count.times do
+      sum -= 10
+    end
   end
   players_points[player] = sum
 end
 
 def add_card(players_cards, player)
-  players_cards[player].push(add_unique_card(players_cards))
+  players_cards[player].push(unique_card(players_cards))
 end
 
 def show_added_card(players_cards, player)
@@ -164,7 +167,7 @@ def dealer_turn_beginning(players_cards, players_points)
   show_points(players_points, :Dealer)
 end
 
-def dealing_card(players_cards, players_points, player)
+def turn(players_cards, players_points, player)
   sleep 1.5
   add_card(players_cards, player)
   show_added_card(players_cards, player)
@@ -181,8 +184,8 @@ def dealing_card(players_cards, players_points, player)
   show_points(players_points, player)
 end
 
-def valid_decision?(option_1, option_2, answer, invalid)
-  [option_1, option_2].include?(answer) ? true : puts(invalid)
+def valid_decision?(option_1, option_2, answer)
+  [option_1, option_2].include?(answer)
 end
 
 def getting_answer(prompt, option_1, option_2, invalid=INVALID)
@@ -190,13 +193,13 @@ def getting_answer(prompt, option_1, option_2, invalid=INVALID)
   loop do
     prompt(prompt)
     answer = gets.chomp.downcase
-    next unless valid_decision?(option_1, option_2, answer, invalid)
-    break
+    break if valid_decision?(option_1, option_2, answer)
+    puts(invalid)
   end
   answer
 end
 
-def hit_or_stay?
+def player_stays?
   prompt = "Hit or stay?"
   decision = getting_answer(prompt, 'hit', 'stay')
   decision == "stay"
@@ -216,7 +219,7 @@ def increase_bankroll
 end
 
 loop do
-  system 'clear' || system(cls)
+  system ('clear') || system('cls')
   prompt("Welcome to 21!")
   answer = ''
   loop do
@@ -230,43 +233,31 @@ loop do
   next_loop = false
 
   loop do
-    system 'clear' || system(cls)
-    players_cards = first_shuffle
+    system ('clear') || system('cls')
+    players_cards = initial_deal
     players_points = { Player: 0, Dealer: 0 }
     stake = 0
     loop do
       prompt("How much $ at stake?")
       stake = gets.chomp
-      next if stake_invalid?(stake, bankroll)
-      stake = stake.to_i
-      break
+      break unless stake_invalid?(stake, bankroll)
     end
+    stake = stake.to_i
 
-    loop do
       player_turn_beginning(players_cards, players_points)
-      break if twenty_one?(players_points, :Player)
-
-      loop do
-        break if hit_or_stay?
-        dealing_card(players_cards, players_points, :Player)
-        break if busted?(players_points) || twenty_one?(players_points, :Player)
+      until twenty_one?(players_points, :Player) || busted?(players_points)
+        break if player_stays?
+        turn(players_cards, players_points, :Player)
       end
-      break
-    end
 
-    loop do
-      break if busted?(players_points)
+
       dealer_turn_beginning(players_cards, players_points)
-      break if twenty_one?(players_points, :Dealer)
 
-      loop do
-        break if (17..20).cover?(players_points[:Dealer]) ||
+      until (17..20).cover?(players_points[:Dealer]) ||
                  twenty_one?(players_points, :Dealer) || busted?(players_points)
-
-        dealing_card(players_cards, players_points, :Dealer)
+        turn(players_cards, players_points, :Dealer)
       end
-      break
-    end
+
 
     winner = find_winner(players_points)
     show_winner(winner, stake)
