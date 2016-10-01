@@ -1,8 +1,7 @@
 require 'pry'
 SUITS = %w(H D S C).freeze
 VALUES = %w(2 3 4 5 6 7 8 9 10 J Q K A).freeze
-POINTS_LIMIT = 21.freeze
-
+POINTS_LIMIT = 21
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -28,7 +27,7 @@ def total(cards)
            end
   end
 
-  values.select { |value| value == "A" }.count.times do
+  values.select { |value| value == 'A' }.count.times do
     sum -= 10 if sum > POINTS_LIMIT
   end
 
@@ -87,8 +86,10 @@ def display_round_results(player_cards, players_points, dealer_cards)
   puts "====================        Round summary:        ===================="
   display_result(dealer_cards, player_cards)
   puts "======================================================================"
-  prompt "Dealer has #{display_cards(dealer_cards, ", ")} for a total of: #{total(dealer_cards)}"
-  prompt "Player has #{display_cards(player_cards, ", ")} for a total of: #{total(player_cards)}"
+  prompt "Dealer has #{display_cards(dealer_cards, ', ')} for "\
+         "a total of: #{total(dealer_cards)}"
+  prompt "Player has #{display_cards(player_cards, ", '")} for "\
+         "a total of: #{total(player_cards)}"
   puts "======================================================================"
   prompt("Player: #{players_points[:player]} points, Dealer: "\
         "#{players_points[:dealer]} points")
@@ -103,7 +104,7 @@ def update_points!(players_points, result)
 end
 
 def final_winner(players_points)
-  players_points.find{|_,v| v == 5}
+  players_points.find { |_, v| v == 5 }
 end
 
 def display_final_winner(winner)
@@ -118,15 +119,15 @@ loop do
   prompt "Welcome to Twenty-One!"
   prompt "We play to five wins!"
   puts "======================================================================"
-  players_points = {player: 0, dealer: 0}
+  players_points = { player: 0, dealer: 0 }
 
   loop do
     deck = initialize_deck
     player_cards = initial_deal(deck)
     dealer_cards = initial_deal(deck)
 
-    prompt "Dealer has #{dealer_cards[0].join(" ")} and ?"
-    prompt "You have: #{display_cards(player_cards, " and ")}"\
+    prompt "Dealer has #{dealer_cards[0].join(' ')} and ?"
+    prompt "You have: #{display_cards(player_cards, ' and ')}"\
            " for a total of #{total(player_cards)}."
 
     loop do
@@ -141,7 +142,7 @@ loop do
       if player_turn == 'h'
         player_cards << deck.pop
         prompt "You chose to hit!"
-        prompt "Your cards are now: #{display_cards(player_cards, ", ")}"
+        prompt "Your cards are now: #{display_cards(player_cards, ', ')}"
         prompt "Your total is now: #{total(player_cards)}"
       end
 
@@ -152,11 +153,12 @@ loop do
     prompt "Dealer turn..."
 
     loop do
-      break if busted?(dealer_cards) || 
-               total(dealer_cards) >= (POINTS_LIMIT-4) || busted?(player_cards)
+      break if busted?(dealer_cards) ||
+               total(dealer_cards) >= (POINTS_LIMIT - 4) ||
+               busted?(player_cards)
       prompt "Dealer hits!"
       dealer_cards << deck.pop
-      prompt "Dealer's cards are now: #{display_cards(player_cards, ", ")}"
+      prompt "Dealer's cards are now: #{display_cards(player_cards, ', ')}"
     end
 
     prompt "Dealer stays at #{total(dealer_cards)}" unless busted?(dealer_cards)
