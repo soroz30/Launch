@@ -103,7 +103,7 @@ def update_points!(players_points, result)
 end
 
 def final_winner(players_points)
-  players_points.find{|_,v| v == 1}
+  players_points.find{|_,v| v == 5}
 end
 
 def display_final_winner(winner)
