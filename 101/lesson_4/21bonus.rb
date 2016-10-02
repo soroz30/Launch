@@ -27,7 +27,7 @@ def total(cards)
            end
   end
 
-  values.select { |value| value == 'A' }.count.times do
+  values.count('A').times do
     sum -= 10 if sum > POINTS_LIMIT
   end
 
@@ -36,6 +36,10 @@ end
 
 def busted?(cards)
   total(cards) > POINTS_LIMIT
+end
+
+def border(width)
+  "".center(width, '=')
 end
 
 def detect_result(dealer_cards, player_cards)
@@ -82,18 +86,22 @@ def display_cards(cards, connector)
   cards.map { |card| card.join(" ") }.join(connector)
 end
 
-def display_round_results(player_cards, players_points, dealer_cards)
-  puts "====================        Round summary:        ===================="
-  display_result(dealer_cards, player_cards)
-  puts "======================================================================"
+def display_round_status(dealer_cards, player_cards)
   prompt "Dealer has #{display_cards(dealer_cards, ', ')} for "\
          "a total of: #{total(dealer_cards)}"
-  prompt "Player has #{display_cards(player_cards, ", '")} for "\
+  prompt "Player has #{display_cards(player_cards, ', ')} for "\
          "a total of: #{total(player_cards)}"
-  puts "======================================================================"
-  prompt("Player: #{players_points[:player]} points, Dealer: "\
-        "#{players_points[:dealer]} points")
-  puts "======================================================================"
+end
+
+def display_round_results(player_cards, players_points, dealer_cards)
+  puts "#{border(20)}        Round summary:        #{border(20)}"
+  display_result(dealer_cards, player_cards)
+  puts border(70)
+  display_round_status(dealer_cards, player_cards)
+  puts border(70)
+  prompt "Player: #{players_points[:player]} points, Dealer: "\
+        "#{players_points[:dealer]} points"
+  puts border(70)
 end
 
 def update_points!(players_points, result)
@@ -108,17 +116,21 @@ def final_winner(players_points)
 end
 
 def display_final_winner(winner)
-  puts "======================================================================"
+  puts border(70)
   prompt("#{winner[0].capitalize} won the game!")
-  puts "======================================================================"
+  puts border(70)
 end
 
-system 'clear' || system('cls')
+def clear_screen
+  system 'clear' || system('cls')
+end
+
+clear_screen
 
 loop do
   prompt "Welcome to Twenty-One!"
   prompt "We play to five wins!"
-  puts "======================================================================"
+  puts border(70)
   players_points = { player: 0, dealer: 0 }
 
   loop do
@@ -166,7 +178,7 @@ loop do
     update_points!(players_points, detect_result(dealer_cards, player_cards))
     display_round_results(player_cards, players_points, dealer_cards)
     sleep 4
-    system 'clear' || system('cls')
+    clear_screen
     break if final_winner(players_points)
   end
   display_final_winner(final_winner(players_points))
