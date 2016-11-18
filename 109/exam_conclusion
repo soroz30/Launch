@@ -1,0 +1,90 @@
+# The program will first randomly pick a number between 1 and 100. The program will then ask the user to guess the number. If the user guesses correctly, the program will end. If the user guessed too high or low, the program will respond with "Your number is too high" or "Your number is too low" respectively, and allow the user to guess again. After finally guessing the number, the program will display how many guesses the user took to guess the number.
+
+random_number = rand(101)
+counter = 0
+
+loop do
+  puts "What's the number?"
+  user_input = gets.chomp.to_i
+  if user_input == random_number
+    break
+  elsif user_input > random_number
+    counter += 1
+    puts "Your number is too high"
+  elsif user_input < random_number
+    counter += 1
+    puts "Your number is too low"
+  end
+end
+
+puts "It took #{counter} guesses to guess the number"
+
+
+
+1. Ogolne zrozumienie programu i ewentualne pytanie
+2. Rozplanowanie kolejnosci i mówienie o krokach ogolnych
+3. Po kolei robienie tego ze sprawdzeniem szczegółów zadania, testowaniem i mówieniem o tym co się robi
+4. Testowanie z punktu widzenia całości
+
+Understand the Problem
+  - requirements are explicit
+    - take notes
+  - requirements are not so explicit and need to be modeled
+    -requirements are showed with examples
+      - examples needs to be described in computational words
+    - implicit knowledge needs to be captured
+      - convert to explicit rules, in computiatonal language
+    - identifying and defining important terms and concepts
+    - ask questions to verify your understanding!
+
+Examples / Test Cases
+  - Input / Output
+    - input
+      - 1 - many words
+      - separated by: 1 - many spaces
+      - terminated by:
+        - 0 - many spaces
+        - followed by a point
+      - chars: letter, space, point, up to 20 letters
+      - need to handle failure?
+
+      - what happens when the number is 0?
+      - what happens when number is an even number?
+
+      - integer number
+      - need to validate?
+
+      - lower case / upper case?
+    - output
+      - words: have the odd words reversed
+      - odd means odd number words reversed
+      - separated by one space between words
+      - terminated: 0 space, followed by a dot
+
+      - returns a string with new line char "\n" delimeters
+      - prints on the screen
+
+      - a string
+      - begins with the centry number
+      - ends with st, nd, rd or th
+
+      - an integer (the scrabble score)
+  - model the problem, rules
+  - Test cases serve two purposes:
+    - help you understand the problem
+    - allow you to verify your solution
+  - Happy paths
+    - combination of requirements; the "obvious" result
+  - Edge cases
+    - focus on input
+    - emptiness (nil/null, "", [], {})
+    - boundary conditions
+    - repetition / duplication
+    - upper case / lower case
+    - data types
+  - Failures / Bad Input
+    - raise exceptions / report errors
+    - return a special value(nil/null, 0, "", [] etc)
+
+
+Zobaczyc ruby testy, edge cases, boundaries

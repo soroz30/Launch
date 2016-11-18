@@ -1,0 +1,245 @@
+3.between?(0,10)
+
+process_the_loop = [true, false].sample
+
+%Q(It's now 12 o'clock.) # => "It's now 12 o'clock."
+
+String#casecmp compares the value of two strings while ignoring the case of both strings.
+
+name = 'Roger'
+
+puts name.casecmp('RoGeR') == 0
+puts name.casecmp('DAVE') == 0
+
+
+jak zrobic z tego ['Dave', 7, 'Miranda', 3, 'Jason', 11] to [['Dave', 7], ['Miranda', 3], ['Jason', 11]]
+
+
+car = {
+  type:  'sedan',
+  color: 'blue',
+  year:  2003
+} do tego: car = [[:type, 'sedan'], [:color, 'blue'], [:year, 2003]]
+
+  result = <<-MSG
+   Loan amout: $#{loan_amount}
+   Annual Percentage RATE: #{apr_rate}%
+   Loan duration in years: #{years}
+   Your monthly payment => $#{format('%02.2f', monthly_payment)}
+  MSG
+
+
+(10..100).cover?(42)
+
+
+
+flintstones = { "Fred" => 0, "Wilma" => 1, "Barney" => 2, "Betty" => 3, "BamBam" => 4, "Pebbles" => 5 }
+flintstones.assoc("Barney")
+
+
+
+ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 402, "Eddie" => 10 }
+ages.key?("Spot")
+
+
+ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 402, "Eddie" => 10 }
+ages.keep_if { |_, age| age < 100 }
+
+
+
+ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 5843, "Eddie" => 10 }
+additional_ages = { "Marilyn" => 22, "Spot" => 237 }
+ages.merge!(additional_ages)
+
+
+
+ages = { "Herman" => 32, "Lily" => 30, "Grandpa" => 5843, "Eddie" => 10, "Marilyn" => 22, "Spot" => 237 }
+ages.values.min
+
+
+
+advice = "Few things in life are as important as house training your pet dinosaur."
+advice.match("Dino")
+
+
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+flintstones.index { |name| name[0, 2] == "Be" }
+
+
+Using array#map!, shorten each of these names to just 3 characters:
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+flintstones.map! do |name|
+  name[0, 3]
+end
+
+
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+flintstones << "Dino"
+flintstones.push("Dino").push("Hoppy")   # push returns the array so we can chain
+flintstones.concat(%w(Dino Hoppy))  # concat adds an array rather than one item
+
+
+advice = "Few things in life are as important as house training your pet dinosaur."
+advice.slice!(0, advice.index('house'))
+
+
+statement = "The Flintstones Rock!"
+statement.scan('t').count
+
+
+title = "Flintstone Family Members"
+title.center(40)
+
+
+
+The Flintstones Rock!
+ The Flintstones Rock!
+  The Flintstones Rock!
+  10.times { |number| puts (" " * number) + "The Flintstones Rock!" }
+
+
+
+result = {}
+letters = ('A'..'Z').to_a + ('a'..'z').to_a
+letters.each do |letter|
+  letter_frequency = statement.scan(letter).count
+  result[letter] = letter_frequency if letter_frequency > 0
+end
+
+
+
+while dividend > 0 do
+  divisors << number / dividend if number % dividend == 0
+  dividend -= 1
+end
+
+
+fibonacci
+
+
+munsters.each do |name, details|
+  case details["age"]
+  when 0...18
+    details["age_group"] = "kid"
+  when 18...65
+    details["age_group"] = "adult"
+  else
+    details["age_group"] = "senior"
+  end
+end
+
+
+
+def color_valid(color)
+  if color == "blue" || color == "green"
+    true
+  else
+    false
+  end
+end
+
+Can be significantly simplified by changing it to just:
+
+def color_valid(color)
+  color == "blue" || color == "green"
+end
+
+
+
+if false
+  greeting = “hello world”
+end
+
+greeting
+
+
+
+
+
+The output is {:a=>"hi there"}. The reason is because informal_greeting is a reference to the original object. The line informal_greeting << ' there' was using the String#<< method, which modifies the object that called it. This means that the original object was changed, thereby impacting the value in greetings. If instead of modifying the original object, we wanted only modify informal_greeting but not greetings, there are a couple of options:
+
+we could initialize informal_greeting with a reference to a new object containing the same value by informal_greeting = greetings[:a].clone.
+we can use string concatenation, informal_greeting = informal_greeting + ' there', which returns a new String object instead of modifying the original object.
+
+greetings = { a: 'hi' }
+informal_greeting = greetings[:a]
+informal_greeting << ' there'
+
+puts informal_greeting  #  => "hi there"
+puts greetings
+
+
+
+
+
+def mess_with_vars(one, two, three)
+  one.gsub!("one","two")
+  two.gsub!("two","three")
+  three.gsub!("three","one")
+end
+
+one = "one"
+two = "two"
+three = "three"
+
+mess_with_vars(one, two, three)
+
+puts "one is: #{one}"
+puts "two is: #{two}"
+puts "three is: #{three}"
+
+"one is: two"
+"two is: three"
+"three is: one"
+
+
+
+
+A UUID is a type of identifier often used as a way to uniquely identify items...which may not all be created by the same system. That is, without any form of synchronization, two or more separate computer systems can create new items and label them with a UUID with no significant chance of stepping on each other's toes.
+
+It accomplishes this feat through massive randomization. The number of possible UUID values is approximately 3.4 X 10E38.
+
+Each UUID consists of 32 hexadecimal characters, and is typically broken into 5 sections like this 8-4-4-4-12 and represented as a string.
+
+It looks like this: "f65c57f6-a6aa-17a8-faa1-a67f2dc9fa91"
+
+Write a method that returns one UUID when called with no parameters.
+
+def generate_UUID
+  characters = []
+  (0..9).each { |digit| characters << digit.to_s }
+  ('a'..'f').each { |digit| characters << digit }
+
+  uuid = ""
+  sections = [8, 4, 4, 4, 12]
+  sections.each_with_index do |section, index|
+    section.times { uuid += characters.sample }
+    uuid += '-' unless index >= sections.size - 1
+  end
+
+  uuid
+end
+
+
+
+
+def count_markers(line, board, marker)
+  board.values_at(*line).count(marker)
+end
+
+
+def someone_won?(brd)
+  !!detect_round_winner(brd)
+end
+
+
+
+def digit_list(number)
+  digits = []
+  loop do
+    number, remainder = number.divmod(10)
+    digits.unshift(remainder)
+    break if number == 0
+  end
+  digits
+end
