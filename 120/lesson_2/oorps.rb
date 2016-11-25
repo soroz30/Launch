@@ -179,7 +179,9 @@ class Score
   end
 
   def update(result)
-    result == :human ? points[:human] += 1 : points[:computer] += 1
+    return unless points.has_key?(result)
+    points[result] += 1
+    #result == :human ? points[:human] += 1 : points[:computer] += 1
   end
 
   def to_s
@@ -237,14 +239,14 @@ class RPSGame
   end
 
   def points_limit
-    points_limit = nil
+    limit = nil
     loop do
       prompt("How many points to win?")
-      points_limit = gets.chomp
-      break if points_limit =~ /^[1-9]\d*$/
+      limit = gets.chomp
+      break if limit =~ /^[1-9]\d*$/
       prompt("Sorry, must be a whole number")
     end
-    points_limit.to_i
+    limit.to_i
   end
 
   def game_rounds
