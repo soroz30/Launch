@@ -1,0 +1,33 @@
+
+[1mFrom:[0m /home/oses32/launch/120/lesson_5/oo21.rb @ line 385 TwentyOne#start:
+
+    [1;34m375[0m: [32mdef[0m [1;34mstart[0m
+    [1;34m376[0m:   loop [32mdo[0m
+    [1;34m377[0m:     clear
+    [1;34m378[0m:     bankroll.choose_stake
+    [1;34m379[0m:     deal_cards
+    [1;34m380[0m:     display_flop
+    [1;34m381[0m: 
+    [1;34m382[0m:     player_turn
+    [1;34m383[0m:     [32mif[0m player.busted?
+    [1;34m384[0m:       binding.pry
+ => [1;34m385[0m:       display_busted
+    [1;34m386[0m:     [32mend[0m
+    [1;34m387[0m: 
+    [1;34m388[0m:     dealer_turn [32munless[0m player.busted?
+    [1;34m389[0m:     [32mif[0m dealer.busted?
+    [1;34m390[0m:       display_busted
+    [1;34m391[0m:     [32mend[0m
+    [1;34m392[0m: 
+    [1;34m393[0m:     update_bankroll
+    [1;34m394[0m:     display_cards
+    [1;34m395[0m:     display_result [32munless[0m player.busted? || dealer.busted?
+    [1;34m396[0m:     display_bankroll
+    [1;34m397[0m:     [32mbreak[0m [32mif[0m bankroll.zero?
+    [1;34m398[0m:     play_again? ? reset : [32mbreak[0m
+    [1;34m399[0m:   [32mend[0m
+    [1;34m400[0m: 
+    [1;34m401[0m:   prompt [31m[1;31m"[0m[31mYou lost all your money![1;31m"[0m[31m[0m [32mif[0m bankroll.zero?
+    [1;34m402[0m:   prompt [31m[1;31m"[0m[31mThank you for playing Twenty-One. Goodbye![1;31m"[0m[31m[0m
+    [1;34m403[0m: [32mend[0m
+
