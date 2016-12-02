@@ -50,29 +50,29 @@ module DisplayMessages
   end
 
   def display_player_turn
-    prompt "#{player.name}'s turn"
+    prompt "#{name}'s turn"
     puts ""
   end
 
   def display_player_stays
-    puts "#{player.name} stays!"
+    puts "#{name} stays!"
     sleep 1
   end
 
   def display_dealer_turn
     puts ""
-    prompt "#{dealer.name}'s turn..."
+    prompt "#{name}'s turn..."
     puts ""
     sleep 1
   end
 
   def display_dealer_stays
-    puts "#{dealer.name} stays!"
+    puts "#{name} stays!"
     sleep 1
   end
 
   def display_dealer_hits
-    puts "#{dealer.name} hits!"
+    puts "#{name} hits!"
     sleep 1
   end
 
@@ -82,108 +82,6 @@ module DisplayMessages
 
   def prompt(message)
     puts "=> #{message}"
-  end
-end
-
-module UserInput
-  include DisplayMessages
-
-  def set_name
-    name = ''
-    loop do
-      prompt "What's your name?"
-      name = gets.chomp
-      break unless name.empty?
-      puts "Sorry, must enter a value."
-    end
-
-    self.name = name
-  end
-
-  def bankroll_size
-    bankroll = nil
-
-    loop do
-      prompt "What's your bankroll in $?"
-      bankroll = gets.chomp
-      break unless bankroll.match(/^[1-9]\d*$/).nil?
-      puts "Please use only positive integers"
-    end
-
-    bankroll.to_i
-  end
-
-  def choose_stake
-    stake = nil
-
-    loop do
-      prompt "What's your stake?"
-      stake = gets.chomp
-      break unless stake_invalid?(stake)
-    end
-
-    @stake = stake.to_i
-  end
-
-  def invalid_integer_input?(integer)
-    integer.match(/^[1-9]\d*$/).nil?
-  end
-
-  def invalid_stake_amount?(stake)
-    @money < stake
-  end
-
-  def stake_invalid?(stake)
-    if invalid_integer_input?(stake)
-      puts "Please use only positive integers"
-      return true
-    end
-
-    if invalid_stake_amount?(stake.to_i)
-      puts "Stake cannot be higher than the bankroll"
-      return true
-    end
-
-    false
-  end
-
-  def hit_or_stay
-    prompt "Would you like to (h)it or (s)tay?"
-    answer = nil
-
-    loop do
-      answer = gets.chomp.downcase
-      break if %w(h s).include?(answer)
-      puts "Sorry, must enter 'h' or 's'."
-    end
-
-    answer
-  end
-
-  def play_again?
-    answer = nil
-
-    loop do
-      prompt "Would you like to play again? (y/n)"
-      answer = gets.chomp.downcase
-      break if %w(y n).include? answer
-      puts "Sorry, must be y or n."
-    end
-
-    @again = answer == 'y'
-  end
-
-  def increase_bankroll?
-    answer = nil
-
-    loop do
-      prompt "Would you like to increase your bankroll? (y/n)"
-      answer = gets.chomp.downcase
-      break if %w(y n).include? answer
-      puts "Sorry, must be y or n"
-    end
-
-    answer == 'y'
   end
 end
 
@@ -227,64 +125,6 @@ module Hand
 
   def busted?
     total > TwentyOne::WINNING_SCORE
-  end
-end
-
-module PlayersTurns
-  include DisplayMessages, UserInput
-
-  def player_hits
-    player.add_card(deck.deal_one)
-    puts "#{player.name} hits!"
-    sleep 1
-    player.display_hand
-  end
-
-  def player_turn_loop
-    loop do
-      break if player.busted?
-      answer = hit_or_stay
-
-      if answer == 's'
-        display_player_stays
-        break
-      else
-        player_hits
-      end
-    end
-  end
-
-  def player_turn
-    display_player_turn
-    player_turn_loop
-  end
-
-  def dealer_points_limit
-    dealer.total >= TwentyOne::HIT_LIMIT && !dealer.busted?
-  end
-
-  def dealer_hits
-    display_dealer_hits
-    dealer.add_card(deck.deal_one)
-    dealer.display_hand
-  end
-
-  def dealer_turn_loop
-    loop do
-      if dealer_points_limit
-        display_dealer_stays
-        break
-      elsif dealer.busted?
-        break
-      else
-        dealer_hits
-      end
-    end
-  end
-
-  def dealer_turn
-    display_dealer_turn
-    dealer_turn_loop
   end
 end
 
@@ -372,10 +212,59 @@ class Participant
 end
 
 class Player < Participant
-  include UserInput
+  def set_name
+    name = ''
+    loop do
+      prompt "What's your name?"
+      name = gets.chomp
+      break unless name.empty?
+      puts "Sorry, must enter a value."
+    end
+
+    self.name = name
+  end
 
   def display_flop
     display_hand
+  end
+
+  def player_hits(deck)
+    add_card(deck.deal_one)
+    puts "#{name} hits!"
+    sleep 1
+    display_hand
+  end
+
+  def hit_or_stay
+    prompt "Would you like to (h)it or (s)tay?"
+    answer = nil
+
+    loop do
+      answer = gets.chomp.downcase
+      break if %w(h s).include?(answer)
+      puts "Sorry, must enter 'h' or 's'."
+    end
+
+    answer
+  end
+
+  def player_turn_loop(deck)
+    loop do
+      break if busted?
+      answer = hit_or_stay
+
+      if answer == 's'
+        display_player_stays
+        break
+      else
+        player_hits(deck)
+      end
+    end
+  end
+
+  def player_turn(deck)
+    display_player_turn
+    player_turn_loop(deck)
   end
 end
 
@@ -392,10 +281,38 @@ class Dealer < Participant
     puts "   an unknown card "
     puts ""
   end
+
+  def dealer_points_limit
+    total >= TwentyOne::HIT_LIMIT && !busted?
+  end
+
+  def dealer_hits(deck)
+    display_dealer_hits
+    add_card(deck.deal_one)
+    display_hand
+  end
+
+  def dealer_turn_loop(deck)
+    loop do
+      if dealer_points_limit
+        display_dealer_stays
+        break
+      elsif busted?
+        break
+      else
+        dealer_hits(deck)
+      end
+    end
+  end
+
+  def dealer_turn(deck)
+    display_dealer_turn
+    dealer_turn_loop(deck)
+  end
 end
 
 class Bankroll
-  include UserInput
+  include DisplayMessages
 
   attr_accessor :money, :stake
 
@@ -406,10 +323,57 @@ class Bankroll
   def zero?
     @money.zero?
   end
+
+  def bankroll_size
+    bankroll = nil
+
+    loop do
+      prompt "What's your bankroll in $?"
+      bankroll = gets.chomp
+      break unless invalid_integer_input?(bankroll)
+      puts "Please use only positive integers"
+    end
+
+    bankroll.to_i
+  end
+
+  def choose_stake
+    stake = nil
+
+    loop do
+      prompt "What's your stake?"
+      stake = gets.chomp
+      break unless stake_invalid?(stake)
+    end
+
+    @stake = stake.to_i
+  end
+
+  def invalid_integer_input?(integer)
+    integer.match(/^[1-9]\d*$/).nil?
+  end
+
+  def invalid_stake_amount?(stake)
+    @money < stake
+  end
+
+  def stake_invalid?(stake)
+    if invalid_integer_input?(stake)
+      puts "Please use only positive integers"
+      return true
+    end
+
+    if invalid_stake_amount?(stake.to_i)
+      puts "Stake cannot be higher than the bankroll"
+      return true
+    end
+
+    false
+  end
 end
 
 class TwentyOne
-  include DisplayMessages, UserInput, PlayersTurns
+  include DisplayMessages
 
   WINNING_SCORE = 21
   HIT_LIMIT = 17
@@ -474,8 +438,8 @@ class TwentyOne
   end
 
   def players_moves
-    player_turn
-    dealer_turn unless player.busted?
+    player.player_turn(deck)
+    dealer.dealer_turn(deck) unless player.busted?
   end
 
   def round_loop
@@ -502,6 +466,32 @@ class TwentyOne
   def increasing_bankroll
     @bankroll = Bankroll.new
     reset
+  end
+
+  def increase_bankroll?
+    answer = nil
+
+    loop do
+      prompt "Would you like to increase your bankroll? (y/n)"
+      answer = gets.chomp.downcase
+      break if %w(y n).include? answer
+      puts "Sorry, must be y or n"
+    end
+
+    answer == 'y'
+  end
+
+  def play_again?
+    answer = nil
+
+    loop do
+      prompt "Would you like to play again? (y/n)"
+      answer = gets.chomp.downcase
+      break if %w(y n).include? answer
+      puts "Sorry, must be y or n."
+    end
+
+    @again = answer == 'y'
   end
 
   def start
