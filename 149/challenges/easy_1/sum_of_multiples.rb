@@ -1,5 +1,3 @@
-require 'pry'
-
 class SumOfMultiples
   DEFAULT_ARGS = [3, 5]
 
