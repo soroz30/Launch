@@ -1,5 +1,3 @@
-require 'pry'
-
 class Triangle
   def initialize(number_of_rows)
     @number_of_rows = number_of_rows
