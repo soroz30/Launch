@@ -1,0 +1,170 @@
+Modules are a way of grouping together methods, classes, and constants. The methods in a module may be instance methods or module methods.
+Instance methods appear as methods in a class when the module is included, module methods do not. 
+Conversely, module methods may be called without creating an encapsulating object, while instance methods may not.
+Generally modules are one of the ways to achieve polymorphism in Ruby. 
+
+Simple implementation of a module:
+
+module Workable
+  def work
+    puts "I can work!"
+  end
+end
+
+class Human
+  include Workable
+
+  def initialize(name, age, height, weight)
+    @name = name
+    @age = age
+    @height = height
+    @weight = weight
+  end
+end
+
+marek = Human.new("Marek", 30, 187, 104)
+marek.work
+
+Here we create class Human and we add Workable module. Module Workable is "mixed in" using include reserved word. New object created from class
+Human can use methods from Workable module. Modules are commonly named with "able" suffix because it describe behaviours which module contain.
+
+The two other ways of using Modules except "mix-ins" are namespacing and container for methods. Namespacing means that we want to group similar
+classes in the module. In this way we can organize related classes in one place and we can avoid name collision with other similar name classes
+in our program.
+
+module Human
+  class Baby
+    def crawl
+      puts "I can crawl!"
+    end
+  end
+
+  class Child
+    def play_with_toys
+      puts "I can play with toys!"
+    end
+  end
+end
+
+We can access to classes using two colons:
+
+baby = Human::Baby.new
+child = Human::Child.new
+baby.crawl
+child.play_with_toys
+
+Modules can be also used as containers for code, called module methods. In this case we use modules for containing methods which are hard to
+place somewhere else in the code.
+
+
+Giving the fact that modules and inheritance seems to share many similarities let's point out two main differences between them:
+- it's impossible to inherit from many classes, but it's possible to include many modules
+- it's impossible to instantiate modules
+
+Compared to inheritance modules are mainly used for sharing behavior, while class inheritance is used for modeling relationship between objects.
+In other words if there is a "is-a" relationship then inheritance should be used, when "has-a" then modules.
+
+Larger example of inheritance and modules:
+
+module Workable
+  def work
+    puts "I can work!"
+  end
+end
+
+module Walkable
+  def walk
+    puts "I can walk!"
+  end
+end
+
+module Drinkable
+  def drink
+    puts "I can drink alcohol!"
+  end
+end
+
+module Learnable
+  def learn
+    puts "I am learning in school!"
+  end
+end
+
+class Human
+  def initialize(name, age, height, weight)
+    @name = name
+    @age = age
+    @height = height
+    @weight = weight
+  end
+
+  def eat
+    puts "I can eat!"
+  end
+
+  def sleep
+    puts "I can sleep!"
+  end
+end
+
+class Baby < Human
+  def crawl
+    puts "I can crawl!"
+  end
+end
+
+class Child < Human
+  include Walkable
+  include Learnable
+
+  def play_with_toys
+    puts "I can play with toys!"
+  end
+end
+
+class Teenager < Human
+  include Walkable
+  include Learnable
+end
+
+class Young_Adult < Human
+  include Walkable
+  include Workable
+  include Drinkable
+  include Learnable
+end
+
+class Middle_Aged < Human
+  include Drinkable, Workable, Walkable
+end
+
+class Retired < Human
+  include Walkable
+  include Drinkable
+
+  def take_pension
+    puts "I can take pension"
+  end
+end
+
+We created main Human method where there are main initialize method for collecting data about created human and eat and sleep method which are
+available to all created subclasses. However if we would like to add more methods the problem would be appear. If we would like to add drink method to young_adult,
+middle_aged and retired we would break DRY rule and we would have same code in few places. If we would like to use inheritance then most propably we would
+start from subclass Walkable_Human from Human. Then we would propable create Learnable_Human from Walkable_Human and that would work for child, teenager and young adult. 
+But if we would like to add also drink method then there would be a problem. If we create Drinkable_Human from Learnable_Human then middle_aged and retired would have
+access to learn method which is wrong and if we create Drinkable_Human from Walkable_Human then young_adult wouldn't have access to learn method.
+
+And this is perfect situation for modules, because we don't have to create complex inheritance and don't have to repeat methods in our classes. All methods
+which are shared by many classes are included in modules and added if needed. 
+
+The order which Ruby is looking for methods is called method lookup path. The order of the lookup is as follows:
+- methods defined in object class
+- methods defined in modules included in object class in reverse order of inclusion
+- methods defined in object superclasses and modules there in same way like in previous point
+
+If we use class method ancestors we can check method lookup path for every class. For example Young_Adult lookup path is:
+Young_Adult, Learnable, Drinkable, Workable, Walkable, Human, Object, Kernel, BasicObject
+
+There is also one other (not recommended) way to add modules, used in Middle_Aged class where we add all modules in one line. In this way Ruby check
+modules from left to right and in Middle_Aged class it's path:
+Middle_Aged, Drinkable, Workable, Walkable, Human, Object, Kernel, BasicObject
