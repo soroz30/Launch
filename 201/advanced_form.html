@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Advanced Form</title>
+  <link rel="stylesheet" type="text/css" href="advanced_form.css">
+</head>
+<body>
+
+  <form action="#" method="post">
+    <h1>Create Your Profile</h1>
+    <fieldset>
+      <h2>Personal Info</h2>
+      <dl>
+        <dt>
+          <label for="first_name">Your Name</label>
+        </dt>
+        <dd>
+          <input type="text" id="first_name" name="first_name" placeholder="First">
+          <input type="text" id="last_name" name="last_name" placeholder="Last">
+        </dd>
+        <dt>
+          <label>Email</label>
+        </dt>
+        <dd>
+          <input type="email" id="email" name="email"></input>
+        </dd>
+      </dl>
+    </fieldset>
+    <fieldset>
+      <h2>Social Media Accounts</h2>
+      <dl class="partial third">
+        <dt>
+          <label for="facebook">Facebook</label>
+        </dt>
+        <dd>
+          <input type="text" id="facebook" name="facebook">
+        </dd>
+      </dl><!--
+      --><dl class="partial third">
+        <dt>
+          <label id="twitter">Twitter</label>
+        </dt>
+        <dd>
+          <input type="text" id="twitter" name="twitter">
+        </dd>
+      </dl><!--
+      --><dl class="partial third last">
+        <dt>
+          <label id="linkedin">Linkedin</label>
+        </dt>
+        <dd>
+          <input type="text" id="linkedin" name="linkedin">
+        </dd>
+      </dl>
+    </fieldset>
+    <fieldset>
+      <h2>
+        Account Info
+      </h2>
+      <dl>
+        <dt>
+          <label for="profile">Profile Name</label>
+        </dt>
+        <dd>
+          <input type="text" id="profile" name="profile">
+        </dd>
+      </dl><!--
+      --><dl class="partial half">
+        <dt>
+          <label for="password">Password</label>
+        </dt>
+        <dd>
+          <input type="password" id="password" name="password">
+        </dd>
+      </dl><!--
+      --><dl class="partial half last">
+        <dt>
+          <label for="password_confirmation">Confirm Password</label>
+        </dt>
+        <dd>
+          <input type="password" id="password_confirmation" name="password_confirmation">
+        </dd>
+      </dl>
+    </fieldset>
+    <fieldset>
+      <h2>
+        <label for="bio">Bio</label>
+      </h2>
+      <textarea rows="6" cols="120" id="bio" name="bio"></textarea>
+    </fieldset>
+    <fieldset>
+      <label class="checkbox">
+        <input type="checkbox" name="agree">
+        I agree to treat other users with respect, and will not say anything at all if I have nothing nice to say.
+      </label>
+      <input type="submit" value="Create Account"></input>
+    </fieldset>
+  </form>
+
+</body>
+</html>
