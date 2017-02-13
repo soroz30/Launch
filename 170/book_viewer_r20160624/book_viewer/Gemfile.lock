@@ -4,7 +4,10 @@ GEM
     backports (3.6.8)
     erubis (2.7.0)
     multi_json (1.12.1)
+<<<<<<< HEAD
     puma (3.7.0)
+=======
+>>>>>>> 8815bd156d2ef5f40679604bb123e7fe9743ba1a
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
