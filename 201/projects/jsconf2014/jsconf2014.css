@@ -1,0 +1,395 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 2. v2.0 | 20110126
+  License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/*
+  ==================
+  Custom styles
+  ==================
+*/
+
+body {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
+/*
+  =================
+  Typography
+  =================
+*/
+
+h1, h2, h3, h4 {
+  text-align: center;
+}
+
+h1, h3 {
+  line-height: normal;
+  color: #fff;
+}
+
+h1 {
+  font-size: 72px;
+}
+
+footer h1 {
+  font-size: 48px;
+  margin: 30px 0;
+  top: 0;
+  padding: 30px 0 0 0;
+  font-weight: 100;
+}
+
+h2 {
+  font-size: 48px;
+  font-weight: 100;
+  line-height: normal;
+  padding: 60px 0 30px 0;
+  color: #444;
+}
+
+h3 {
+  font-size: 31px;
+  text-transform: uppercase;
+}
+
+h4 {
+  margin: 30px 0 4px;
+  font-weight: 600;
+  font-size: 24px;
+  color: #008000;
+}
+
+h5 {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 25px;
+  margin-bottom: 17px;
+}
+
+b {
+  font-weight: bold;
+}
+
+.text-centered {
+  text-align: center;
+}
+
+.dark-background h2 {
+  color: #fff;
+  padding: 0;
+  margin: 0 auto;
+  text-align: left;
+  max-width: 960px;
+  font-size: 31px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dark-background p {
+  color: #fff;
+  margin: 0 auto 17px;
+  max-width: 960px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 25px;
+}
+
+section a, .dark-background a {
+  color: #008000;
+  font-weight: bold;
+}
+
+/*
+  ==================
+  Header
+  ==================
+*/
+
+header {
+  margin-bottom: 54px;
+}
+
+header nav {
+  border-top: 10px solid #F5F5F5;
+  border-bottom: 1px solid #EEE;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  background: #fff;
+}
+
+.nav-list {
+  text-align: center;
+}
+
+.nav-list li {
+  margin: 0 25px;
+  font-size: 13px;
+  line-height: 44px;
+  height: 44px;
+  color: #444;
+  display: inline-block;
+}
+
+.header-background {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  top: 54px;
+  background: url("http://2014.jsconfbr.org/images/front.jpg") center no-repeat;
+}
+
+#logo, h1, h3 {
+  position: relative;
+  top: 151px;
+}
+
+#logo {
+  display: block;
+  margin: 0px auto 4px;
+  width: 80px;
+  height: 80px;
+}
+
+/*
+  ==================
+  Main
+*/
+
+main {
+  max-width: 906px;
+  margin: 0 auto;
+}
+
+section {
+  margin-bottom: 60px;
+  border-top: 1px solid #efefef;
+}
+
+/*
+  ================
+  Button
+  ================
+*/
+
+.button {
+  padding: 10px 30px;
+  border: none;
+  color: #fff;
+  background: #008000;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.button:hover {
+  background: #006000;
+}
+
+/*
+  ===============
+  Speakers
+  ===============
+*/
+
+.block {
+  display: inline-block;
+  margin: 5px;
+  height: 378px;
+  border: 1px solid #e8e8e8;
+  width: 280px;
+  vertical-align: top;
+  position: relative;
+  text-align: center;
+}
+
+.block p {
+  padding: 0 10px;
+}
+
+.block-hover-text {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.9);
+  padding: 10px;
+  transition: all 0.5s;
+}
+
+.block-hover-text:hover {
+  opacity: 1;
+}
+
+.block-hover-text h4 {
+  color: #008000;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.block-hover-text p {
+  color: #fff;
+  font-size: 13px;
+  line-height: 15px;
+}
+
+/*
+  ================
+  Schedule
+  ================
+*/
+
+table {
+  border-bottom: 1px solid #EFEFEF;
+  width: 100%;
+}
+
+table h2 {
+  padding: 0;
+  font-size: inherit;
+  display: inline-block;
+  margin: 0 10px 0 0;
+  font-weight: normal;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table h3 {
+  top: 0;
+  color: #008000;
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+td {
+  border-top: 1px solid #EFEFEF;
+  padding: 10px;
+  text-align: left;
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+.schedule-photo img {
+  width: 130px;
+}
+
+.schedule-tag {
+  display: inline-block;
+  padding: 1px 4px;
+  font-size: 7px;
+  background: #EEE;
+  border: 1px solid #AAA;
+}
+
+/*
+  =============
+  Sponsors
+  =============
+*/
+
+#sponsors {
+  width: 960px;
+  margin-left: -27px;
+}
+
+.gold-sponsor, .silver-sponsor, .support-sponsor {
+  margin-right: 40px;
+}
+
+.silver-sponsor img {
+  width: 240px;
+}
+
+.support-sponsor img {
+  width: 180px;
+}
+
+/*
+  ================
+  Footer
+  ================
+*/
+
+footer {
+  height: 340px;
+  background: url(http://2014.jsconfbr.org/images/people.jpg) no-repeat center 23%;
+  background-size: cover;
+}
+
+.dark-background {
+  padding: 10px;
+  background: rgba(0,0,0,0.7);
+}
+
+p:last-of-type {
+  line-height: 25px;
+}
+
+footer .button {
+  margin-top: -20px;
+}

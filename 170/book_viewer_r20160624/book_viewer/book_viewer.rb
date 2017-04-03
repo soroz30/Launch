@@ -51,8 +51,7 @@ not_found do
 end
 
 get "/" do
-  @title = "The Adventures of Sherlock Holmes"
-
+  title = "The Adventures of Sherlock Holmes"
   erb :home
 end
 

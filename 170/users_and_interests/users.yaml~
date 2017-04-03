@@ -22,5 +22,5 @@
   :airline: British Airways
   :departure: Warsaw
   :arrival: London
-  :time: [["monday", "tuesday", "wednesday", "thursday", "friday"], ["15:40"]]
-  :price: 99
+  
+  :price: 99$

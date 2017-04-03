@@ -1,0 +1,402 @@
+https://launchschool.com/lessons/283ebb5e/assignments/03cc69c0
+
+Now we can add a bit more meaning and helpful information to our post date. There just so happens to be a <time> element that allows us to wrap dates and times and provides us with an attribute to ensure that the time is always presented in a universally-accepted format. This is especially helpful for search engines like Google that like to display a post date along with the search result listing. Wrap the full date with the time element, then add an attribute named datetime. 
+
+<body>
+  <h1>That Pixel Design is so Hot Right Now</h1>
+  <p>by <a href="">JUSTIN DAUER</a> · <time datetime="2014-11-12">November 12, 2014</time> · <a href="">3 Comments</a></p>
+  There’s a certain ...
+</body>
+
+We've still got a block of text that is italicized in the original post. Since this is copy taken from a different source, this would be a direct quotation of another's work. To indicate this, we can use a <blockquote> element. Traditionally, we would also wrap the text in a paragraph tag inside the blockquote.
+
+  <blockquote>
+    <p>We as The Dead Pixel Society honor the humble pixel with icon creations we would have done had we continued designing these past 18 years, under the exact same archaic constraints: 256 colors, pixel-by-pixel, on a 32x32 canvas.</p>
+  </blockquote>
+
+
+http://maxdesign.com.au/articles/definition/
+
+https://launchschool.com/lessons/283ebb5e/assignments/9ecb9ed3
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" rowspan="3">Red</th>
+      <td>Meiomi Pinot Noir</td>
+      <td>$17.99</td>
+    </tr>
+    <tr>
+      <td>Radius Cabernet</td>
+      <td>$9.99</td>
+    </tr>
+    <tr>
+      <td>Apothic Red</td>
+      <td>$7.97</td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="3">White</th>
+      <td>Cloud Break Chardonnay</td>
+      <td>$8.99</td>
+    </tr>
+    <tr>
+      <td>Kendall Jackson Chardonnay</td>
+      <td>$9.97</td>
+    </tr>
+    <tr>
+      <td>Kim Crawford Sauvignon Blanc</td>
+      <td>$9.97</td>
+    </tr>
+    <tr>
+      <th scope="row" rowspan="3">Sake</th>
+      <td>Gekkeikan Sake</td>
+      <td>$9.99</td>
+    </tr>
+    <tr>
+      <td>Mura Mura Mountain Sake</td>
+      <td>$15.99</td>
+    </tr>
+    <tr>
+      <td>TY KU Sake Junmai Ginjo Black</td>
+      <td>$21.99</td>
+    </tr>
+  </tbody>
+</table>
+
+
+https://launchschool.com/lessons/283ebb5e/assignments/088f5b5e
+
+Notice that adding margin had no effect on the cells. Margin does not get applied to elements that are a display type of table-cell. This is why we have a border-spacing property instead. Unfortunately, this doesn't allow us to fine-tune spacing between particular cells since it applies to the table as a whole
+
+body {
+  font: italic normal 16px/140% Helvetica, Arial, sans-serif;
+}
+
+https://launchschool.com/lessons/283ebb5e/assignments/73b55491 - wszystko
+
+https://css-tricks.com/fighting-the-space-between-inline-block-elements/
+
+li {
+  display: inline-block;
+  width: 23%;
+  min-height: 120px;
+  margin: -10px 1%;
+  line-height: 120px;
+  text-align: center;
+  background: #ffffcc;
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  background: #a7ceff;
+}
+
+https://launchschool.com/lessons/283ebb5e/assignments/998ed071
+
+<header role="banner">
+
+
+https://zellwk.com/blog/rem-vs-em/
+https://launchschool.com/posts/22fcf64d
+
+https://launchschool.com/lessons/72c8ad7b/assignments/54104230
+https://launchschool.com/lessons/72c8ad7b/assignments/23e12bfc
+
+One important property to remember when dealing with inline-block elements is vertical-align. By default, inline-block elements will use vertical-align: baseline, meaning two or more inline-block elements will be lined so that the baseline of the text it contains will be lined up with that of the parent. If you want the elements vertically aligned with each other so that you could draw a straight line through the middle, you'd have to set it to vertical-align: middle. You can also fine-tune vertical alignment on a per-element basis by using values and measurements like pixels or ems.
+
+https://launchschool.com/lessons/72c8ad7b/assignments/1abad513
+https://launchschool.com/lessons/72c8ad7b/assignments/9770322c
+
+To take up the entirety of the viewport, we can use viewport units (vw and vh) to fit 100% of the width (100vw) and 100% of the height (100vh). Then set z-index values for both elements to position one on top of the other.
+
+#positioned {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  /* Add a z-index greater than the elements you want to appear on top of */
+  z-index: 2;
+  width: 400px;
+  padding: 30px 15px;
+  margin-left: -200px;
+  background: #ffffcc;
+  box-sizing: border-box;
+}
+
+#fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: rgba(0, 0, 0, .6);
+}
+
+https://d3jtzah944tvom.cloudfront.net/lesson_3/the_box_model/box_model_v2.html
+
+https://launchschool.com/lessons/b80a876c/assignments/d3382604
+
+Using the formaction attribute on our button elements, we've eliminated the need for separate forms and pages to delete your account or request a password reset. If either of the buttons is clicked instead of the submit input, the action on the button is used to submit the entire form rather than the form element's action attribute. The server could then, for example, be set to ignore the password input when requesting a password reset, instead only using the email to send a password reset message.
+
+Just like with the action attribute, there is a way of overriding the method attribute using button and submit input attributes. A formmethod attribute can be added to either of these two elements in the same way a formaction attribute can, changing the method in the event that button or submit input is used to send the form.
+
+https://launchschool.com/lessons/b80a876c/assignments/1ffc30c2
+
+Did you notice that our inputs are inside our label elements? This is a convenient way of making the text for the label activate the corresponding input without having to add a for attribute on the label.
+
+If you'd like to set a checkbox to its checked state by default or set one of the radio inputs to checked, a boolean attribute of checked can be added. This is recommended with radios since the form could conceivably be submitted with no option selected without it. Note, however, that Firefox will remember the state of checkboxes and radios that were previously changed by the user, overriding the checked attributes on them. To disable this behavior on either individual inputs or on the entire form, add the attribute autocomplete and set it to off.
+
+https://launchschool.com/lessons/b80a876c/assignments/9ea5a378
+https://launchschool.com/lessons/b80a876c/assignments/8f9578cd
+https://launchschool.com/lessons/b80a876c/assignments/97e46c3b
+
+The select elements are missing an id attribute. Notice that its respective labels have a for attribute that associates it with its respective select element but it's only the name attribute that is present.
+
+Without the id attribute, the w3c validator returns the following error:
+
+The for attribute of the label element must refer to a non-hidden form control.
+
+
+https://launchschool.com/lessons/b80a876c/assignments/20259df7
+
+<div class="styled_form horizontal">
+  <dl>
+    <dt>
+      <label for="example_2">Name</label>
+    </dt><!--
+    --><dd>
+      <input type="text" id="example_2" />
+    </dd>
+  </dl>
+  <dl>
+    <dt>
+      <label for="example_3">Title</label>
+    </dt><!--
+    --><dd>
+      <input type="text" id="example_3" />
+    </dd>
+  </dl>
+</div>
+
+Be sure to add the HTML comments to eliminate the whitespace characters between the dt and dd elements so they are side by side.
+
+Another advantage of using definition lists like this is having an element to use as a container for the label and input pairing. This is useful for form layouts like a standard mailing address form. Creating the city, state, and zipcode dl elements is as easy as adding a class to each and styling appropriately.
+
+
+https://d3jtzah944tvom.cloudfront.net/lesson_4/contact_form/index_v1.html
+https://launchschool.com/lessons/b80a876c/assignments/872dba2d
+https://launchschool.com/lessons/b80a876c/assignments/13c30b4e
+
+http://d3jtzah944tvom.cloudfront.net/lesson_3/pseudo_elements/index.html
+http://d3jtzah944tvom.cloudfront.net/lesson_3/company_site/home.html
+
+https://launchschool.com/lessons/b80a876c/assignments/9c41387cs
+http://d3jtzah944tvom.cloudfront.net/lesson_3/company_site_responsive_breakpoints/home.html
+
+https://launchschool.com/lessons/b80a876c/assignments/baf2f060
+http://d3jtzah944tvom.cloudfront.net/photo_gallery_with_fluid_layout/example.html
+
+https://launchschool.com/posts/eeb8ae78
+https://www.w3.org/wiki/Inheritance_and_cascade
+
+Forcing inheritance
+You can force inheritance—even for properties that aren’t inherited by default—by using the inherit keyword. This should be used with care, however, since Microsoft Internet Explorer (up to and including version 7) doesn’t support this keyword.
+
+The following rule will make all paragraphs inherit all background properties from their parents:
+
+p {
+  background: inherit;
+}
+With shorthand properties you can use inherit instead of the normal values. You have to use shorthand for everything or nothing—in longhand you can’t specify some values and use inherit for others, because the values can be given in any order and there is no way to specify which values we want to inherit.
+
+Forcing inheritance isn’t something you need to do every day. It can be useful to “undo” a declaration in a conflicting rule, or to avoid hardcoding certain values. As an example, consider a typical navigation menu:
+
+
+
+Shay Howe
+
+http://learn.shayhowe.com/html-css/opening-the-box-model/
+
+The Space Between Inline-Block Elements
+
+One important distinction with inline-block elements is that they are not always touching, or displayed directly against one another. Usually a small space will exist between two inline-block elements. This space, though perhaps annoying, is normal. We’ll discuss why this space exists and how to remove it in the next lesson.
+
+http://learn.shayhowe.com/html-css/positioning-content/
+
+Floats May Change an Element’s Display Value
+
+When floating an element, it is also important to recognize that an element is removed from the normal flow of a page, and that may change an element’s default display value. The float property relies on an element having a display value of block, and may alter an element’s default display value if it is not already displayed as a block-level element.
+
+For example, an element with a display value of inline, such as the <span> inline-level element, ignores any height or width property values. However, should that inline-level element be floated, its display value will be changed to block, and it may then accept height or width property values.
+
+As we float elements we must keep an eye on how their display property values are affected.
+
+There are a number of ways to remove the space between inline-block elements, and some are more complex than others. We are going to focus on two of the easiest ways, both of which happen inside HTML.
+
+The first solution is to put each new <section> element’s opening tag on the same line as the previous <section> element’s closing tag. Rather than using a new line for each element, we’ll end and begin elements on the same line. Our HTML could look like this:
+
+There are a number of ways to remove the space between inline-block elements, and some are more complex than others. We are going to focus on two of the easiest ways, both of which happen inside HTML.
+
+The first solution is to put each new <section> element’s opening tag on the same line as the previous <section> element’s closing tag. Rather than using a new line for each element, we’ll end and begin elements on the same line. Our HTML could look like this:
+
+Another way to remove the white space between inline-block elements is to open an HTML comment directly after an inline-block element’s closing tag. Then, close the HTML com- ment immediately before the next inline-block element’s opening tag. Doing this allows inline-block elements to begin and end on separate lines of HTML and “comments out” any potential spaces between the elements. The resulting code would look like this:
+
+
+
+When building a website, it is always best to write modular styles that may be reused elsewhere, and reusable layouts are high on the list of reusable code. Layouts can be created using either floats or inline-block elements, but which works best and why?
+
+Whether it’s better to use floats or inline-block elements to lay out the structure of a page is open to debate. My approach is to use inline-block elements to create the grid—or layout—of a page and to then use floats when I want content to wrap around a given element (as floats were intended to do with images). Generally, I also find inline-block elements easier to work with.
+
+That said, use whatever works best for you. If you are comfortable with one approach over the other, then go for it.
+
+Currently there are new CSS specifications in the works—specifically flex- and grid- based properties—that will help address how to best lay out pages. Keep an eye out for these methods as they begin to surface.
+
+
+http://learn.shayhowe.com/html-css/working-with-typography/
+
+
+Line height, the distance between two lines of text (often referred to as leading) is declared using the line-height property. The line-height property accepts all general length values, which we covered in Lesson 3, “Getting to Know CSS.”
+
+The best practice for legibility is to set the line-height to around one and a half times our font-size property value. This could be quickly accomplished by setting the line-height to 150%, or just 1.5. However, if we’re working with a baseline grid, having a little more control over our line-height using pixels may be preferable.
+
+Line height may also be used to vertically center a single line of text within an element. Using the same property value for the line-height and height properties will vertically center the text:
+
+This technique may be seen with buttons, alert messages, and other single-line text blocks.
+
+Box Shadow
+
+The text-shadow property places a shadow specifically on the text of an element. If we’d like to place a shadow on the element as a whole, we can use the box-shadow property.
+
+The box-shadow property works just like the text-shadow property, accepting values for horizontal and vertical offsets, a blur, and a color.
+
+The box-shadow property also accepts an optional fourth length value, before the color value, for the spread of a shadow. As a positive length value, the spread will expand the shadow larger than the size of the element it’s applied to, and as a negative length value the spread will shrink the shadow to be smaller than the size of the element it’s applied to.
+
+Lastly, the box-shadow property may include an optional inset value at the beginning of the value to place the shadow inside an element as opposed to outside the element.
+
+http://learn.shayhowe.com/html-css/setting-backgrounds-and-gradients/
+
+The background-size property allows us to specify a size for a background image. The property accepts a few different values, including length and keyword values.
+
+When using length values, we can specify a width and a height value by using two space-separated values. The first value will set the width of the background image, while the second value will set the height of the background image. It’s important to note that percentage values are in relation to the element’s size, not the background image’s original size.
+
+Consequently, setting a background-size property with a 100% width will make the background image occupy the full width of the element. If a second value isn’t identified after the width, the height value will be automatically set to preserve the aspect ratio of the background image.
+
+The keyword value auto may be used as either the width or height value to preserve the aspect ratio of the background image. For example, if we want to set the height of the background image to be 75% of the height of the element while maintaining the image’s aspect ratio, we can use a background-size property value of auto 75%
+
+In addition to length background-size property values, there are also cover and contain keyword values available to the background-size property.
+
+The cover keyword value specifies that the background image will be resized to completely cover an element’s width and height. The background image’s original aspect ratio will be preserved, yet the image will stretch or shrink as necessary to cover the entire element. Often when using the cover keyword value, part of the background image is cut off in order for the image to occupy the full available space of the element.
+
+The contain keyword value, on the other hand, specifies that the background image will be resized to reside entirely contained within an element’s width and height. In doing so the background image’s original aspect ratio will be preserved, but the image will stretch or shrink as necessary to remain within the width and height of the element. In contrast with the cover keyword value, the contain keyword value will always show the full background image; however, oftentimes it will not occupy the full available space of the element.
+
+Both the cover and contain keyword values may result in slightly distorted background images, particularly when the images are stretched beyond their original dimensions. We’ll want to keep an eye out for this when using these values, to make sure the resulting styles are satisfactory.
+
+The background-clip property specifies the surface area a background image will cover, and the background-origin property specifies where the background-position should originate. The introduction of these two new properties corresponds with the introduction of three new keyword values: border-box, padding-box, and content-box. Each of these three values may be used for the background-clip and background-origin properties.
+
+The background-clip property value is set to border-box by default, allowing a background image to extend into the same area as any border. Meanwhile, the background-origin property value is set to padding-box by default, allowing the beginning of a background image to extend into the padding of an element.
+
+http://learn.shayhowe.com/html-css/creating-lists/
+
+There may come a time when the default list-style-type property values are not enough, and we want to customize our own list item marker. Doing so is most commonly accomplished by placing a background image on each <li> element within a list.
+
+The process includes removing any default list-style-type property value and adding a background image and padding to the <li> element.
+
+In detail, the list-style-type property value of none will remove existing list item markers. The background property will identify a background image, along with its position and repeat value, if necessary. And the padding property will provide space to the left of the text for the background image.
+
+By default the list item marker is to the left of the content within the <li> element. This list style positioning is described as outside, meaning all of the content will appear directly to the right, outside of the list item marker. Using the list-style-position property, we can change the default value of outside to inside or inherit.
+
+The outside property value places the list item marker to the left of the <li> element and doesn’t allow any content to wrap below the list item marker. The inside property value (which is rarely seen or used) places the list item marker in line with the first line of the <li> element and allows other content to wrap below it as needed.
+
+When to Use an Image Element vs. a Background Image
+
+There are two primary ways to add images to a web page. One way, as covered here, is to use the <img> element within HTML. Another way is to use the background or background-image property within CSS to assign a background image to an element. Either option will do the job; however, they each have specific use cases.
+
+The <img> element within HTML is the preferred option when the image being used holds semantic value and its content is relevant to the content of the page.
+
+The background or background-image property within CSS is the preferred option when the image being used is part of the design or user interface of the page. As such, it’s not directly relevant to the content of the pag
+
+http://learn.shayhowe.com/html-css/organizing-data-with-tables/
+
+The Headers Attribute
+
+The headers attribute is very similar to the scope attribute. By default, the scope attribute may only be used on the <th> element. In the case that a cell, either a <td> or <th> element, needs to be associated with a different header, the headers attribute comes into play. The value of the headers attribute on a <td> or <th> element needs to match the id attribute value of the <th> element that cell pertains to.
+
+As the border-collapse property with the separate value allows borders to be stacked up against one another, the border-spacing property can determine how much space, if any, appears between the borders.
+
+For example, a table with a 1-pixel border around the entire table and a 1-pixel border around each cell will have a 2-pixel border all around every cell because the borders stack up next to one another. Adding in a border-spacing value of 4 pixels separates the borders by 4 pixels.
+
+
+http://learn.shayhowe.com/html-css/writing-your-best-code/
+
+To make text bold and place a strong importance on it, we’ll use the <strong> inline-level element. There are two elements that will bold text for us: the <strong> and <b> elements. It is important to understand the semantic difference between the two.
+
+The <strong> element is semantically used to give strong importance to text, and is thus the most popular option for bolding text. The <b> element, on the other hand, semantically means to stylistically offset text, which isn’t always the best choice for text deserving prominent attention. We have to gauge the significance of the text we wish to set as bold and to choose an element accordingly.
+
+At times it becomes fairly difficult to decide which element—<article>, <section>, or <div>—is the best element for the job based on its semantic meaning. The trick here, as with every semantic decision, is to look at the content.
+
+Both the <article> and <section> elements contribute to a document’s structure and help to outline a document. If the content is being grouped solely for styling purposes and doesn’t provide value to the outline of a document, use the <div> element.
+
+If the content adds to the document outline and it can be independently redistributed or syndicated, use the <article> element.
+
+If the content adds to the document outline and represents a thematic group of content, use the <section> element
+
+Spaces Within Selectors
+
+Within the previous combined selector, .hotdog p.mustard, there is a space between the hotdog class selector and the paragraph type selector but not between the paragraph type selector and the mustard class selector. The use, and omission, of spaces makes a large difference in selectors.
+
+Since there isn’t a space between the paragraph type selector and the mustard class selector that means the selector will only select paragraph elements with the class of mustard. If the paragraph type selector was removed, and the mustard class selector had spaces on both sides of it, it would select any element with the class of mustard, not just paragraphs.
+
+The best practice is to not prefix a class selector with a type selector. Generally we want to select any element with a given class, not just one type of element. And following this best practice, our new combined selector would be better as .hotdog .mustard.
+
+When selectors are combined, so are the specificity weights of the individual selectors. These combined specificity weights can be calculated by counting each different type of selector within a combined selector.
+
+Looking at our combined selectors from before, the first selector, .hotdog p, had both a class selector and a type selector. Knowing that the point value of a class selector is 0-1-0 and the point value of a type selector is 0-0-1, the total combined point value would be 0-1-1, found by adding up each kind of selector.
+
+The second selector, .hotdog p.mustard, had two class selectors and one type selector. Combined, the selector has a specificity point value of 0-2-1. The 0 in the first column is for zero ID selectors, the 2 in the second column is for two class selectors, and the 1 in the last column is for one type selector.
+
+Comparing the two selectors, the second selector, with its two classes, has a noticeably higher specificity weight and point value. As such it will take precedence within the cascade. If we were to flip the order of these selectors within our style sheet, placing the higher-weighted selector above the lower-weighted selector as shown here, the appearance of their styles would not be affected due to each selector’s specificity weight.
+
+<cite>: Used to reference a creative work, author, or resource
+<q>: Used for short, inline quotations
+<blockquote>: Used for longer external quotations
+
+
+The keyword value auto may be used as either the width or height value to preserve the aspect ratio of the background image. For example, if we want to set the height of the background image to be 75% of the height of the element while maintaining the image’s aspect ratio, we can use a background-size property value of auto 75%.
+
+http://stackoverflow.com/questions/9519841/why-does-this-css-margin-top-style-not-work
+
+Projekty:
+
+http://d3jtzah944tvom.cloudfront.net/lesson_3/company_site_responsive_breakpoints/home.html
+http://d3jtzah944tvom.cloudfront.net/photo_gallery_with_fluid_layout/example.html
+http://d3jtzah944tvom.cloudfront.net/lesson_5/nutrition_facts_label/label.html
+https://d3jtzah944tvom.cloudfront.net/lesson_4/web_store_catalog/index_v1.html
+http://d3jtzah944tvom.cloudfront.net/lesson_5/responsive_blog_design/index_v2.html
+http://jsconfbp.com/
+
+http://2014.jsconfbr.org/:
+http://stackoverflow.com/questions/9519841/why-does-this-css-margin-top-style-not-work
+https://css-tricks.com/what-you-should-know-about-collapsing-margins/
+
+przy problemie z inline block (opadanie w dół trochę) trzeba było użyć vertical align
+http://stackoverflow.com/questions/9670469/css-vertical-alignment-of-inline-inline-block-elements
+
+http://stackoverflow.com/questions/7440905/make-link-color-same-as-text-color-without-knowing-text-color
+
+Do teorii przerobić css tricks almanach
+
+Do egzaminu bardzo wazny:
+
+- positioning
+- układ i te gridy
+- photoshop
+- triki i szczegóły
+

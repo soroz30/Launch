@@ -1,0 +1,7 @@
+<form post="/users/signup" method="post">
+  <label for="username">Username: <input type="text" name="username" id="username" required></label><br>
+  <label for="password">Password: <input type="password" name="password" id="password" required></label><br>
+  <button type="submit">Sign Up</button>
+</form>
+
+<%= @credentials.keys.include? "developer" %>

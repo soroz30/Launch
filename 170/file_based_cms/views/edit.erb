@@ -1,0 +1,14 @@
+<form method="post" action="/<%= @filename %>/<%= params[:version] %>">
+  <label for="content">Edit content of <%= @filename %>:</label>
+  <div>
+    <textarea name="content" id="content" rows="20" cols="100"><%= @content %></textarea>
+  </div>
+  <p>Version: <input type="text" value="<%= params[:version] %>"></input></p>
+  <p>Select version:</p>
+  <ul style="list-style: none;">
+      <% list_of_versions(@filename).each do |version|%>
+      <li><a href="/<%= @filename %>/edit/<%= version %>"><%= version %></li>
+      <% end %>
+  </ul>
+  <p><button type="submit">Save Changes</button>
+</form>

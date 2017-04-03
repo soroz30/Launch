@@ -1,0 +1,161 @@
+https://www.khanacademy.org/partner-content/code-org/internet-works
+
+https://launchschool.com/books/http/read/background#briefhistory
+
+https://launchschool.com/books/http/read/what_is_a_url
+
+https://launchschool.com/books/http/read/making_requests
+
+https://launchschool.com/books/http/read/processing_responses
+
+https://launchschool.com/books/http/read/statefulness
+
+https://launchschool.com/books/http/read/security
+
+Describe what HTTP is and the role of the request and the response.
+
+HTTP, or Hypertext Transfer Protocol, was invented by Tim Berners-Lee in the 1980s. It is a system of rules, a protocol, that serve as a link between applications and the transfer of hypertext documents. Stated differently, it's an agreement, or message format, of how machines communicate with each other. HTTP follows a simple model where a client makes a request to a server and waits for a response. Hence, it's referred to as a request response protocol. Think of the request and the response as text messages, or strings, which follow a standard format that the other machine can understand.
+
+What are the components of an HTTP request and an HTTP response?
+
+http://geekexplains.blogspot.com/2008/06/whats-http-explain-http-request-and.html
+
+https://www.tutorialspoint.com/http/http_requests.htm
+
+https://launchschool.com/lessons/2629a297/assignments/d34daf15
+
+Identify the components of a URL. Construct a URL that contains a few params and values.
+
+When you see a URL, such as "http://www.example.com:88/home?item=book", it's comprised of several components. We can break this URL into 5 parts:
+
+http: The scheme. It always comes before the colon and two forward slashes and tells the web client how to access the resource. In this case it tells the web client to use the Hypertext Transfer Protocol or HTTP to make a request. Other popular URL schemes are ftp, mailto or git.
+
+www.example.com: The host. It tells the client where the resource is hosted or located.
+
+:88 : The port or port number. It is only required if you want to use a port other than the default.
+
+/home/: The path. It shows what local resource is being requested. This part of the URL is optional.
+
+?item=book : The query string, which is made up of query parameters. It is used to send data to the server. This part of the URL is also optional.
+
+Sometimes, the path can point to a specific resource on the host. For instance, www.example.com/home/index.html points to an HTML file located on the example.com server.
+
+Sometimes, we may want to include a port number which the host uses to listen to HTTP requests. A URL in the form of: http://localhost:3000/profile is using the port number 3000 to listen to HTTP requests. The default port number for HTTP is port 80. Even though this port number is not always specified, it's assumed to be part of every URL. Unless a different port number is specified, port 80 will be used by default in normal HTTP requests. To use anything other than the default, one has to specify it in the URL.
+
+
+
+Explain the difference between GET and POST, and know when to choose each:
+
+GET requests should only retrieve content from the server. They can generally be thought of as "read only" operations, although there are some subtle exceptions to this rule. For example, consider a webpage that tracks how many times it is viewed. GET is still appropriate since the main content of the page doesn't change.
+
+POST requests involve changing values that are stored on the server. Most HTML forms that submit their values to the server will use POST. Search forms are a noticeable exception to this rule, and they often use GET since they are not changing any data on the server, only viewing it.
+
+
+
+What is the difference between client-side and server-side code? For each file in a Sinatra project, be able to say which it is.?
+
+http://softwareengineering.stackexchange.com/questions/171203/what-are-the-differences-between-server-side-and-client-side-programming
+
+https://launchschool.com/lessons/ee756b04/assignments/e1925a84
+
+
+How does an HTML form element interact with the server-side code that processes it?
+
+https://launchschool.com/lessons/ee756b04/assignments/09d7452c
+
+
+
+
+Why is user-entered content a security risk? Be aware of how to mitigate this risk
+
+https://launchschool.com/lessons/d755e7ec/assignments
+
+
+
+What are the benefits of using view templates? Be able to use an ERB template in a Sinatra route?
+
+https://launchschool.com/lessons/ee756b04/assignments/0b163f61
+
+
+Write a view helper and use it within a view template.
+
+https://launchschool.com/lessons/ee756b04/assignments/089abb71
+
+
+What is the session? Where it is stored? How it is used?
+
+
+https://launchschool.com/books/http/read/statefulness#sessions
+
+http://webapps-for-beginners.rubymonstas.org/sessions/sinatra_sessions.html
+
+
+Explain how redirection works and why it would be needed in a web application.
+
+https://launchschool.com/lessons/ee756b04/assignments/35470d96
+
+
+
+
+
+
+
+A monthly budget application that tracks bills, categories or expenses, and provides totals by month or year.
+
+Co ma miec:
+- ogólny przegląd: saldo, wpływy i wypływy z aktualnego miesiąca
+- transakcje: dodanie transakcji, edycja i usuniecie. W transakcji amount, rodzaj i kategoria
+- historia
+- statystyka: ogólna i wg. kategorii
+
+http://blog.storage.com/wp-content/uploads/2013/04/b2c-blog-Storage-101-pricing-of-self-storage.jpg
+
+https://www.templatemonster.com/demo/53705.html
+
+Na indeksie ma się pokazywać aktualne saldo i wpływy i wypływy z tego miesiaca. W pierwszym menu mają być transakcje i
+i wszystkie opcje. W drugim menu historia i statystyka: historia transakcji, data wpływy i wydatki z danego miesiąca i wg. kategorii
+
+Dane i działanie:
+Gdy tworzy sie nowego usera automatycznie otwiera sie takze nowy yaml w data z transakcjami. W tym yamlu niech będa dane dotyczące
+transakcji. Dane do transakcji: rodzaj (wpływ czy wypływ), amount, kategoria i opis. 
+Na głównej stronie:
+- saldo wyliczane przelatując po wszystkich transakcjach injectem
+- łączne wpływy i wypływy
+Na stronie dodawania transakcji:
+- forma do dodania a w niej wszystkie dane do transakcji
+Na stronie histori:
+- lista transakcji z danego miesiąca
+- saldo z danego miesiąca
+- pole do wyboru miesiąca
+- przy transakcji pole do skasowania i edycji
+
+categories:
+- food
+- bills
+- transportation
+- entertaiment
+- mortgage
+- clothing
+- medical
+- insurance
+- education
+- home items
+- personal items
+
+Dalej poprawić wygląd: dodać sesje i buttony na dole. Po zapisaniu transakcji niech pojawia się, że transakcja has been added i zostaje się na stronie nowej transakcji. Dodać na głównej ostatnie 5 transakcji. Na stronie historii dodać:
+- defaultowo niech się wyświetlają transakcje z danego miecha
+- przy transakcji opcje usunięcia i edycji
+- opcje wyszukiwania wg. miesięcy i roku
+- opcje wyszukiwania wg. kategorii
+- we wszyskich opcjach niech pojawiają się wpływy i wypływy i saldo na koniec
+
+
+Dane do sortowania w session[:sort]. Tam powinien być array z trzema danymi. Jak się włącza history to powinna sesja[:sort] zmieniąc się na aktualny miech. W opcjach dotyczących catgories niech będzie podstawowa opcja all.
+W formie zastosować checkboxy przy sortowaniu wg. roku i miesięcy i wg. tego sortowoć
+
+Sortowanie:
+W zależności od tego, czy year czy month jest wolny metoda wybiera tylko takie transakcje, ktore spelniaja te wymagania. Następnie sprawdza czy jest kategoria wybrana, a jak tak to wybiera tylko te wg. danej kategorii. Musza być dane do defaultowej sesji. Po tym jak się wybierze do sortowania to zmienia session[:sort], metody obliczajace wykorzystuja te dane do obliczeń, następnie session[:sort] jest resetowane do początku.
+- dodać sesje i ew. jakieś funkcjonalności
+- security i input
+- rubocop
+- czyszczenie css(razem z nauką css)
