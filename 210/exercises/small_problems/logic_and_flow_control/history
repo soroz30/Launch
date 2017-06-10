@@ -1,0 +1,367 @@
+function substring (string, start, end) {
+  var newString = '';
+  var temp;
+
+  if (end == undefined) {
+    end = string.length;
+  }
+
+  if (start < 0 || isNaN(start)) {
+    start = 0;
+  }
+
+  if (end < 0 || isNaN(end)) {
+    end = 0;
+  }
+
+  if (start > end) {
+    temp = start;
+    start = end;
+    end = temp;
+  }
+
+  if (start > string.length) {
+    start = string.length;
+  }
+
+  if (end > string.length) {
+    end = string.length;
+  }
+
+  for (var i = start; i < end; i++) {
+    newString += string[i];
+  }
+
+  return newString;
+}
+
+
+function substr(string, start, length) {
+  if (start < 0) {
+    start = string.length + start;
+  } 
+
+  var result = '';
+  for (var i = start; i < start + length; i++) {
+    if (i >= string.length) {
+      break;
+    }
+    result += string[i];
+  }
+  return console.log(result);
+}
+
+
+
+
+
+function toLowerCase(string) {
+  var result = ''
+  for (var i = 0; i < string.length; i++) {
+    var charCode = string.charCodeAt(i);
+    if (charCode >= 65 && charCode <= 90) {
+      var charCode = charCode + 32;
+      result += String.fromCharCode(charCode);
+    } else {
+      result += string[i]
+    }
+  }
+  return console.log(result);
+}
+
+
+
+
+
+function startsWith(string, searchString) {
+  if (searchString.length > string.length) {
+    return console.log(false);
+  } else if (searchString == '') {
+    return console.log(true);
+  }
+
+  for (var i = 0; i < searchString.length; i++) {
+    if (string[i] != searchString[i]) {
+      return console.log(false);
+    }
+  }
+
+  return console.log(true);
+}
+
+
+
+
+
+
+function repeat(string, times) {
+  if (times < 0 || isNaN(times)) {
+    return console.log('undefined')
+  }
+
+  var result = ''
+  for (var i = 0; i < times; i++) {
+    result += string
+  }
+  return console.log(result);
+}
+
+
+
+
+
+
+function splitString(string, delimeter) {
+  console.log('logs:');
+  if (delimeter == undefined) {
+    return console.log('ERROR: No delimeter');
+  }
+
+  var log = ''
+
+  for (var i = 0; i < string.length; i++) {
+    if (string[i] != delimeter && delimeter != '') {
+      log += string[i]
+      continue
+    } else if (string[i] != delimeter && delimeter != '') {
+      log += string[i];
+      console.log(log);
+      log = '';
+    } else {
+      console.log(log)
+      log = ''
+    }
+  }
+
+  if (log != '') {
+    return console.log(log);
+  }
+}
+
+
+
+function trim(string) {
+  var final = '';
+  for (var i = 0; i < string.length; i++) {
+    if (string[i] != ' ') {
+      string = string.slice(i)
+      break;
+    }
+  }
+  final += string;
+  var sliceIndex = 0
+  for (var i = final.length - 1; i > 0; i--) {
+    if (string[i] != ' ') {
+      sliceIndex = i + 1;
+      break;
+    }
+  }
+  return console.log(final.slice(0, sliceIndex));
+}
+
+trim('   ')
+
+
+
+
+function indexOf(firstString, secondString) {
+  for (var i = 0; i <= firstString.length - secondString.length; i++) {
+    var testString = ''
+    for (var j = i; j < i + secondString.length; j++) {
+      testString += firstString[j]
+    }
+    if (testString == secondString) {
+      return console.log(i);
+    }
+  }
+
+  return console.log(-1)
+}
+
+indexOf('Blue Whale', 'leB');
+
+
+
+function generatePattern(number) {
+  for (var i = 1; i <= number; i++) {
+    var string = '';
+    for (var j = 1; j <= i; j++) {
+      string += String(j);
+    }
+
+    for (var k = i + 1; k <= number; k++) {
+      if (k < 10) {
+        string += '*';
+      } else {
+        string += '**';
+      }
+    }
+
+    console.log(string);
+  }
+}
+
+
+
+
+
+function isPrime(number) {
+  if (number < 2) {
+    return false;
+  }
+
+  for (var i = 3; i <= number / 2; i += 2) {
+    if (number % i == 0) {
+      return false;
+    }
+  }
+
+  return true;
+
+}
+
+function checkGoldbach(number) {
+  if (number < 4 || number % 2 == 1) {
+    return false;
+  }
+
+  for (var i = 3; i < number / 2; i += 2) {
+    if (isPrime(i) && isPrime(number-i)) {
+      console.log(i, number-i);
+    }
+  }
+}
+
+function gcd(numberOne, numberTwo) {
+  var numbers = [numberOne, numberTwo];
+  if (numberTwo > numberOne) {
+    numbers = numbers.reverse();
+  }
+
+  for (var i = numbers[1]; i != 0; i = i / 2 ) {
+    if (numbers[0] % i == 0) {
+      return console.log(i);
+    }
+  }
+}
+
+gcd(12, gcd(4, 8));
+
+
+var scores = [];
+
+for (var i = 0; i < 3; i++) {
+  scores.push(parseInt(prompt('Enter score ' + (i + 1))));
+}
+
+var average = (scores[0] + scores[1] + scores[2]) / scores.length;
+var grade;
+
+if (average >= 90) {
+  grade = 'A';
+} else if (average >= 70 && average < 90) {
+  grade = 'B';
+} else if (average >= 50 && average < 70) {
+  grade = 'C';
+} else {
+  grade = 'F';
+}
+
+console.log('Based on the average of your 3 scores your letter grade is "' + grade + '"');
+
+
+
+function guessPassword() {
+  var password = 'pass';
+  var guess = '';
+  var counter = 0;
+
+  while (counter <= 2 && guess != password) {
+    guess = prompt('What is the password?');
+    counter++;
+  }
+
+  if (guess == password) {
+    console.log('You have successfully logged in.');
+  } else {
+    console.log('You have been denied access');
+  }
+}
+
+guessPassword();
+
+
+function isXor(value1, value2) {
+  return !!((value1 && !value2) || (value2 && !value1));
+}
+
+
+
+function isXor (booleanOne, booleanTwo) {
+  if (booleanOne && booleanTwo) {
+    return false
+  } else if ((booleanOne || booleanTwo) == false) {
+    return false
+  }
+
+  return true;
+}
+
+console.log(isXor(true, true));    // false
+;      // false
+
+
+
+function logMultiples(number) {
+  for (var i = 1; i * number <= 100; i += 2) {
+    console.log(i * number);
+  }
+}
+
+logMultiples(17);
+
+
+
+function multiplesOfThreeAndFive() {
+  for (var i = 3; i <= 100; i++) {
+    if (i % 3 == 0 || i % 5 == 0) {
+      i % 3 == 0 && i % 5 == 0 ? console.log(i + '!') : console.log(i);
+    }
+  }
+}
+
+multiplesOfThreeAndFive()
+
+
+
+
+function logOddNumbers(number) {
+  for (var i = 1; i <= number; i += 1) {
+    if (i % 2 === 0) {
+      continue;
+    } else {
+      console.log(i);
+    }
+  }
+}
+
+logOddNumbers(19);
+
+
+
+function isPrime(number) {
+  if (number < 2) {
+    return false;
+  }
+
+  for (var i = 3; i <= number / 2; i += 2) {
+    if (number % i == 0) {
+      return false;
+    }
+  }
+
+  return true;
+
+}
+
+console.log(isPrime(55));

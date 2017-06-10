@@ -1,0 +1,327 @@
+function makeDoubler(caller) {
+  return function(number) {
+    console.log('This function was called by ' + caller + '.');
+    return number + number;
+  };
+}
+
+var doubler = makeDoubler('Victor');
+doubler(5);
+
+
+
+
+function areArraysEqual (array1, array2) {
+  array1 = array1.sort();
+  array2 = array2.sort();
+  for (var i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(areArraysEqual([1, 2, 3], [1, 2, 3]));                  // true
+console.log(areArraysEqual([1, 2, 3], [3, 2, 1]));                  // true
+console.log(areArraysEqual(['a', 'b', 'c'], ['b', 'c', 'a']));      // true
+console.log(areArraysEqual(['1', 2, 3], [1, 2, 3]));                // false
+console.log(areArraysEqual([1, 1, 2, 3], [3, 1, 2, 1]));            // true
+console.log(areArraysEqual([1, 2, 3, 4], [1, 1, 2, 3]));            // false
+console.log(areArraysEqual([1, 1, 2, 2], [4, 2, 3, 1]));            // false
+
+
+function splice(array, start, deleteCount) {
+  var finishIndex;
+  var arrayLength = array.length;
+  var i;
+  var difference;
+  var removedElements = [];
+  var items = [];
+
+  if (start + deleteCount > arrayLength) {
+    finishIndex = arrayLength;
+  } else {
+    finishIndex = start + deleteCount;
+    if (finishIndex < 0) {
+      return [];
+    }
+  }
+
+  difference = finishIndex - start;
+
+  for (i = start; i < arrayLength; i++) {
+    if (i < finishIndex) {
+      removedElements.push(array[i]);
+    }
+    array[i] = array[i + difference];
+  }
+
+  array.length = array.length - difference;
+
+  i = 3;
+
+  while (arguments[i]) {
+    items.push(arguments[i]);
+    i++;
+  }
+
+  if (items.length == 0) {
+    return removedElements;
+  }
+
+  array.length = array.length + items.length;
+  newLength = arrayLength;
+
+  for (i = array.length - 1; i >= start; i--) {
+    if (i >= start && i < finishIndex) {
+      array[i] = items[i - start];
+    } else {
+      array[i] = array[i - items.length];
+    }
+  }
+
+}
+
+var arr = [1, 2, 3];
+splice(arr, 1, 1, 'two');
+
+
+
+
+
+function slice(array, begin, end) {
+  var newArray = [];
+
+  for (begin; begin < end; begin++) {
+    newArray.push(array[begin])
+  }
+
+  return newArray;
+}
+
+slice([1, 2, 3], 1, 2);           // [2]
+slice([1, 2, 3], 2, 0);           // []
+slice([1, 2, 3], 5, 1);           // []
+
+var arr = [1, 2, 3];
+slice(arr, 1, 3);                 // [2, 3]
+arr;                              // [1, 2, 3]
+
+
+
+
+
+
+function unshift(array) {
+  var finalLength = array.length + (arguments.length - 1);
+  var lastElementIndex = finalLength - 1;
+  var newElementsNumber = arguments.length - 1;
+
+  for (i = lastElementIndex; i >= 0; i--) {
+    if (i <= (newElementsNumber - 1)) {
+      array[i] = arguments[i + 1];
+    } else {
+      array[i] = array[i - newElementsNumber];
+    }
+  }
+
+  return finalLength;
+}
+
+unshift([1, 2, 3], 5, 6);        // 5
+unshift([1, 2, 3]);              // 3
+unshift([4, 5], [1, 2 ,3]);      // 3
+
+
+
+
+
+function unshift(array) {
+  var finalLength = array.length + (arguments.length - 1);
+  var lastElementIndex = finalLength - 1;
+  var newElementsNumber = arguments.length - 1;
+
+  for (i = lastElementIndex; i >= 0; i--) {
+    if (i <= (newElementsNumber - 1)) {
+      array[i] = arguments[i + 1];
+    } else {
+      array[i] = array[i - newElementsNumber];
+    }
+  }
+
+  return finalLength;
+}
+
+unshift([1, 2, 3], 5, 6);        // 5
+unshift([1, 2, 3]);              // 3
+unshift([4, 5], [1, 2 ,3]);      // 3
+
+
+
+
+function shift(array) {
+  var firstElement = array[0];
+  var i;
+
+  for (i = 0; i < array.length - 1; i++) {
+    array[i] = array[i+1];
+  }
+
+  if (array.length > 0) { 
+    array.length = array.length - 1;
+  }
+  return firstElement;
+}
+
+shift([1, 2, 3]);                // 1
+shift([]);                       // undefined
+shift([[1, 2, 3], 4 ,5]);        // [1, 2, 3]
+
+
+
+function reverse(input) {
+  var resultArray = [];
+  var i;
+  var lastIndex = input.length - 1
+  for (i = lastIndex; i >= 0; i--) {
+    resultArray[lastIndex - i] = input[i];
+  }
+  if (Array.isArray(input)) {
+    return resultArray;
+  } else {
+    return resultArray.join('');
+  }
+}
+
+console.log(reverse('Hello'));          // olleH
+console.log(reverse('a'));              // a
+console.log(reverse([1, 2, 3, 4]));     // [4, 3, 2, 1]
+console.log(reverse([]));               // []
+
+
+
+
+
+
+
+function pop(array) {
+  var poppedElement = array[array.length - 1];
+  array.splice(array.length - 1);
+
+  return poppedElement;
+}
+
+function push(array) {
+  for (var i = 1, length = arguments.length; i++) {
+    array[array.length] = arguments[i];
+  }
+
+  return array.length;
+}
+
+
+
+function concat() {
+  var newArray = [];
+  var currentArg;
+
+  for (var i = 0; i < arguments.length; i++) {
+    currentArg = arguments[i];
+    if (Array.isArray(currentArg)) {
+      for (var j = 0; j < currentArg.length; j++) {
+        newArray[newArray.length] = currentArg[j];
+      }
+    } else {
+      newArray[newArray.length] = currentArg;
+    }
+  }
+
+  return newArray;
+}
+
+
+
+
+
+
+
+function concat(array1) {
+  var newArray = []
+
+  for (var i = 0, length = array1.length; i < length; i++) {
+    newArray[i] = array1[i];
+  }
+
+  if (Array.isArray(arguments[0])) {
+    for (var i = 0, length = secondArgument.length; i < length; i++) {
+      newArray[newArray.length] = secondArgument[i];
+    }
+  } else {
+    newArray[newArray.length] = arguments[1];
+  }
+
+  return newArray;
+}
+
+
+
+var DIGITS = ['0', '1', '2', '3', '4', '5', '6' , '7', '8', '9'];
+
+function integerToString(number) {
+  var result = "";
+  var remainder;
+
+  do {
+    remainder = number % 10;
+    number = Math.floor(number / 10);
+
+    result = DIGITS[remainder] + result;
+  } while (number > 0);
+
+  return result;
+}
+
+function signedIntegerToString(number) {
+  if (number < 0) {
+    return ("-" + integerToString(-number));
+  } else if (number > 0) {
+    return ("+" + integerToString(number));
+  } else {
+    return integerToString(number);
+  };
+}
+
+
+
+var DIGITS = {
+  '0': 0, '1': 1, '2': 2, '3': 3, '4'; 4,
+  '5': 5, '6': 6, '7': 7, '8': 8, '9': 9
+}
+
+function stringToInteger(string) {
+  var value = 0;
+  var numbers = stringToNumbers(string);
+  for (var i = 0; i < numbers.length; i++) {
+    value = 10 * value + numbers[i];
+  }
+
+  return value;
+}
+
+function stringToNumbers(string) {
+  var result = [];
+  for (var i = 0; i < string.length; i++) {
+    result.push(DIGITS[string[i]]);
+  }
+
+  return result;
+}
+
+function stringToSignedInteger(string) {
+  switch (string[0]) {
+    case '-': return -stringToInteger(string.slice(1));
+    case '+': return stringToInteger(string.slice(1));
+    default: return stringToInteger(string);
+  }
+}

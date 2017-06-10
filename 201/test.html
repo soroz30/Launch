@@ -4,27 +4,58 @@
   <title>Test</title>
   <meta charset="utf-8">
   <style type="text/css">
-    div {
-      width: 300px;
-      height: 300px;
+
+    #positioned {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 400px;
+      z-index: 2;
+      margin-left: -200px;
+      padding: 30px 15px;
+      background: #ffffcc;
       box-sizing: border-box;
     }
 
-    #red {
-      padding: 20px;
-      background: #ffcccc;
+    #positioned span {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 20px;
+      height: 20px;
+      width: 20px;
+      background: #fcfc99;
     }
 
-    #blue {
-      border: 2px solid black;
-      background: #ccccff;
+    #fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      background: rgba(0, 0, 0, .6);
     }
+
   </style>
 </head>
 <body>
 
-  <div id="red"></div>
-  <div id="blue"></div>
+  <section>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est non faucibus porttitor. Donec mattis ultrices mauris nec vehicula. Mauris erat lacus, tincidunt in pharetra in, euismod et odio. Cras tempor blandit mi, sed faucibus libero gravida vel. Cras quis massa maximus, mollis lectus at, facilisis tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean varius auctor ligula eget fermentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam aliquam est diam, id aliquet nibh pharetra ut. Phasellus id felis in dui maximus rhoncus. Maecenas iaculis tellus purus, ut scelerisque velit tempus at. Pellentesque cursus dapibus libero nec molestie. Donec consectetur augue ut mauris condimentum, eget vestibulum nisi dapibus.
+
+    Fusce nec velit ut tortor cursus mattis at nec leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam ultricies diam non nulla fermentum posuere. Aliquam ut ipsum eu sem tincidunt pretium. Curabitur efficitur facilisis ullamcorper. Maecenas in sagittis mauris. Duis bibendum felis rutrum posuere condimentum. Aenean faucibus massa non porta suscipit. Pellentesque a ullamcorper ex, vitae feugiat odio. Nam ac ullamcorper leo. Duis justo metus, mollis in neque at, condimentum scelerisque magna. Pellentesque luctus sodales felis sit amet venenatis. Fusce pretium ligula eget ipsum consectetur laoreet.
+
+    Praesent non erat non mauris finibus ullamcorper convallis nec nisi. Nullam cursus luctus risus vel faucibus. Maecenas non lacinia purus. Etiam ultricies rhoncus risus sit amet mollis. Suspendisse hendrerit enim non neque porta, consequat condimentum ante finibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla porta ipsum quis tincidunt cursus. Suspendisse vitae pretium mauris. Ut sit amet dolor eget dolor dictum tincidunt. Vivamus ut interdum magna. Donec commodo sapien non libero interdum, at interdum velit sollicitudin. Ut varius diam in auctor aliquet.
+
+    Curabitur vestibulum auctor lectus, at malesuada neque. Curabitur quis dui euismod, congue nisl vitae, aliquam velit. Maecenas accumsan, sem quis faucibus consectetur, ligula ex tincidunt nibh, et malesuada lacus mauris at nulla. In hac habitasse platea dictumst. Donec eget cursus nibh. Donec tempor erat a molestie pretium. Phasellus viverra interdum dictum. Maecenas maximus velit ac vulputate laoreet. Quisque ac cursus lorem. Integer congue eget quam eu viverra. Donec vel ligula vel lacus aliquet suscipit.
+
+    Cras imperdiet, erat non tristique tristique, velit enim fermentum est, at elementum metus est vel lectus. Aenean accumsan semper libero, in convallis risus euismod eu. Nam tincidunt felis vitae scelerisque convallis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut pretium mi odio, nec scelerisque turpis pharetra a. Donec imperdiet dapibus eros, ac venenatis risus tincidunt a. Quisque venenatis porttitor lobortis. Phasellus tincidunt nunc ipsum, vitae convallis metus pulvinar quis. Phasellus id lorem bibendum, bibendum est vitae, blandit tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin vulputate in erat in pretium. Phasellus vitae orci ut erat sodales varius nec sed nibh.
+  </section>
+
+  <div id="positioned">I am positioned<span></span></div>
+
+  <div id="fixed"></div>
 
 </body>
 </html>

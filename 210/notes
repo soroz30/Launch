@@ -1,0 +1,195 @@
+https://launchschool.com/lessons/18c27076/assignments/99d04218
+
+https://launchschool.com/lessons/18c27076/assignments/393c3d45
+
+https://launchschool.com/lessons/18c27076/assignments/007be085
+
+Unlike expressions, statements in JavaScript don't necessarily resolve to a value. Statements generally control the execution of the program. For example, variable assignments are expressions, but variable declarations are statements:
+
+var a;            // a statement to declare variables
+var b;
+var c;
+var b = (a = 1);        // this works, because assignments are expressions too
+var c = (var a = 1);    // this gives an error, since a statement can't be used as part of an expression
+There are other types of statements, such as if ... else ... and switch for branching logic (conditionals), while and for for looping, etc. We'll learn more about those in the next topics. Just remember that statements help to "do something", instead of giving you a value to use.
+
+https://launchschool.com/lessons/18c27076/assignments/492016f3
+
+https://launchschool.com/lessons/18c27076/assignments/6e6ba2fd
+
+https://launchschool.com/lessons/18c27076/assignments/f631d3c6
+
+https://launchschool.com/lessons/18c27076/assignments/ece2ce42
+
+https://launchschool.com/lessons/18c27076/assignments/3ec3d1b0
+
+Truthy and Falsy
+
+Switch
+
+https://launchschool.com/lessons/18c27076/assignments/0a12e3a8
+
+With two equals signs, JavaScript tries to change the values to the same basic type. Here, the string gets converted to a number, and both are equal. With three equals signs, no conversion occurs; since a string is different from a number, they are not strictly equal. We call this strict equality.
+
+https://launchschool.com/lessons/18c27076/assignments/6a46e552
+
+
+--------------------------------------------------------------
+
+
+'Blue Whale'.indexOf('Whale');    // returns  5
+
+'canal'.lastIndexOf('a');     // returns 3
+
+var original = '   foo  ';
+original.trim();        // "foo"
+
+str.split(' ');     // ["We", "put", "comprehension", "and", "mastery", "above", "all", "else"]
+str.split('and');   // ["We put comprehension ", " mastery above all else"]
+
+
+'abcd'.repeat(3);      // abcdabcdabcd
+'abcd'.repeat('a');    // ""
+
+var str = 'We put comprehension and mastery above all else';
+
+str.startsWith('We');       // true
+str.startsWith('We put');   // true
+
+
+'miXedCase1Word'.toLowerCase();         // returns mixedcase1word"
+
+'miXedCase1Word'.toUpperCase();         // returns "MIXEDCASE1WORD"
+
+
+
+var string = 'hello world';
+
+string.substr(2, 4);     // "llo "
+string.substr(-3, 2);    // "rl"
+string.substr(8, 20);    // "rld"
+
+
+
+var string = 'hello world';
+
+string.substring(2, 4);    // "ll"
+string.substring(4, 2);    // "ll"
+
+string.substring(0, -1);   // ""
+string.substring(-1, 0);   // ""
+
+string.substring(8, 20);   // "rld"
+string.substring(20, 8);   // "rld"
+
+--------------------------------------------------------------
+
+https://launchschool.com/lessons/511a561c/assignments/7b1265c4
+
+Parameters and arguments are two terms that often get mixed up, even by professional developers. Consider the following:
+
+function multiply(a, b) {
+  return a * b;
+}
+We say that the function multiply() takes two parameters, a and b. We call the actual values passed to a function during execution its arguments. In the following code, 5 and 6 are the function's arguments:
+
+multiply(5, 6);         // returns 30
+During execution, JavaScript makes the arguments passed to a function available to the function as local variables with the same names as the function's parameters. Within the function body, we call these local variables arguments.
+
+This dual usage is confusing. Developers often use the terms interchangeably, which only adds to the confusion. This short table may help you remember which term to use:
+
+
+
+Calling a Function with too few arguments does not raise an error.
+Within a Function, an argument that wasn't provided in the call will have the value undefined.
+The NaN result is caused by the fact that b is undefined; it isn't a direct result of the missing parameter. It is merely JavaScript's standard behavior when a number and undefined are added.
+
+
+https://launchschool.com/lessons/511a561c/assignments/a480ef58 WAZNE!
+
+https://launchschool.com/lessons/511a561c/assignments/529cf31a 
+
+https://launchschool.com/lessons/511a561c/assignments/ce95611e
+
+------------------------------------------------------------
+
+Array.isArray([]);        // true
+Array.isArray('array');   // false
+
+Write a function named slice that accepts three arguments: an Array, a start index, and an end index. The function should return a new Array that contains values from the original Array starting with the value at the starting index, and including all values up to but not including the end index. Do not modify the original Array.
+
+Write a function named splice that accepts three arguments: an Array, a start index, and the number of values to remove. The function should remove values from the original Array, starting with the first index and removing the specified number of values. The method should return the removed values in a new Array.
+
+Write a function named concat that accepts two Array arguments. The function should return a new Array that contains the values from each of the original Arrays.
+
+You may use functions that were answers to previous exercises to complete this exercise, but do not use any built-in Array methods.
+
+
+arr.slice()
+
+arr.slice(8)
+
+return arrCopy.sort(function(a, b) { return b - a; });
+
+-----------------------------------------------------------
+
+WAZNE wszsytkie!
+
+https://launchschool.com/lessons/0539330a/assignments/3d86107a
+
+https://launchschool.com/lessons/0539330a/assignments/4ef54bb4
+
+https://launchschool.com/lessons/0539330a/assignments/b95a1315
+
+-----------------------------------------------------------
+
+// Alternative 1
+var myArray = [1, 2, 3, 4];
+var myOtherArray = [];
+
+for (var i = 0; i < myArray.length; i++) {
+  myOtherArray.push(myArray[i]);
+}
+
+myArray.pop();
+console.log(myArray);
+console.log(myOtherArray);
+
+// Alternative 2
+var myArray = [1, 2, 3, 4];
+var myOtherArray = myArray.slice();
+
+myArray.pop();
+console.log(myArray);
+console.log(myOtherArray);
+
+
+Array.isArray(currentArg)
+
+array.splice(array.length - 1);
+
+
+function shift(array) {
+  var result;
+
+  if (array.length !== 0) {
+    result = array.splice(0, 1).pop();
+  }
+
+  return result;
+}
+
+function unshift(array) {
+  for (var index = 1; index < arguments.length; ++index) {
+    array.splice(index - 1, 0, arguments[index]);
+  }
+
+  return array.length;
+}
+
+
+function penultimate(string) {
+  return string.split(' ').slice(-2, -1)[0];
+}
+
+String.fromCharCode(87, 101, 108, 99, 111, 109, 101, 32)

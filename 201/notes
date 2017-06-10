@@ -391,12 +391,33 @@ http://stackoverflow.com/questions/9670469/css-vertical-alignment-of-inline-inli
 
 http://stackoverflow.com/questions/7440905/make-link-color-same-as-text-color-without-knowing-text-color
 
-Do teorii przerobić css tricks almanach
+Interview:
+- positioning, floats, display in divs, tables, lists, background, overflow, layouts, vertical, centering etc.
+- zrobic jedno zadanie z tymi wszystkimi i pocwiczyc sobie manipulujac projektami
+- zapamietac wszystko co sie da, szczegolnie z teorii z ls i shay howe
 
-Do egzaminu bardzo wazny:
 
-- positioning
-- układ i te gridy
-- photoshop
-- triki i szczegóły
 
+function longestSentence(text) {
+  var sentenceArray = text.match(/\w.*?[.!?]/g);
+  var longestSentences = [sentenceArray[0]];
+  var longestLength = sentenceArray[0].split(' ').length;
+  
+  sentenceArray.slice(1).forEach (function(sentence) {
+    sentenceLength = sentence.split(' ').length;
+    if (sentenceLength > longestLength) {
+      longestLength = sentenceLength;
+      longestSentences = [sentence];
+    } else if (sentenceLength == longestLength) {
+      longestSentences.push(sentence);
+    }
+  });
+  
+  longestSentences.forEach (function(sentence) {
+    console.log(sentence)
+  });
+  
+  return console.log("The longest sentence has " + longestLength + " words.")
+}
+
+longestSentence(longText);

@@ -254,6 +254,10 @@ section {
   ===============
 */
 
+.blocks-container {
+  text-align: center;
+}
+
 .block {
   display: inline-block;
   margin: 5px;
@@ -353,7 +357,7 @@ td {
 */
 
 #sponsors {
-  width: 960px;
+  max-width: 960px;
   margin-left: -27px;
 }
 
@@ -367,6 +371,10 @@ td {
 
 .support-sponsor img {
   width: 180px;
+}
+
+.container {
+  margin: 0 auto;
 }
 
 /*
@@ -392,4 +400,69 @@ p:last-of-type {
 
 footer .button {
   margin-top: -20px;
+}
+
+@media (max-width: 980px) {
+  section, #sponsors {
+    margin: 0 30px 60px;
+  }
+}
+
+@media (max-width: 654px) {
+  header nav {
+    display: none;
+  }
+
+  header {
+    margin: 0;
+  }
+
+  #logo, h1, h3 {
+    top: 90px;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .header-background {
+    position: static;
+    height: 300px;
+    top: 0;
+  }
+
+  tr {
+    position: relative;
+    display: block;
+    border-top: 1px solid #EFEFEF;
+  }
+
+  td {
+    border: none;
+  }
+
+  td:first-of-type {
+    text-align: right;
+    display: block;
+    padding: 20px;
+  }
+
+  td:nth-child(2) {
+    display: block;
+  }
+
+  .schedule-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+  }
+
+  .schedule-photo img {
+    width: 80px;
+  }
 }
