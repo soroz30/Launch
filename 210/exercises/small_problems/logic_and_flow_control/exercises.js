@@ -1,38 +1,59 @@
 /*
+  "1, 3, 7, 2, 4, 1" ---> "1, 3, 7, 12, 14, 21"
+  "1-3 1-3" --> "1, 2, 3, 11, 12, 13"
+  "1-4.2.7.5.3-2-1" --> "1, 4, 12, 17, 25, 33, 42, 51"
+  "123-22-1-33/22" --> "123, 222, 231, 233, 322"
+  "231323123213" --> "231323123213"
+  "" --> ""
+  "--/" --> ""
+  "0-2"
+
+  holka --> ""
 
   input:
-  - number
+    - String of separated digits
   output:
-  - printed star:
-    - three star stars in every line except the middle line
-    - 0 to (n/2-1) spaces between stars
-    - in the middle line n stars
-  algorithm:
-    - count from n = Math.floor(7/2) + 1 to 0
-    - if < n 
-*/
+    - Array of numbers
+      - cleaned from signs
+      - 
+*/ 
 
-function star(n) {
-  var middle = Math.floor(n/2);
-  for (var i = 0; i < n; i++) {
-    if (i < middle) {
-      var outside = i;
-      var inside = middle - i - 1;
-      printLine(outside, inside);
-    } else if (i == middle) {
-      console.log("*".repeat(n));
-    } else {
-      var outside = n - i - 1;
-      var inside = i - (middle + 1)
-      printLine(outside, inside);
+function expand(string) {
+  var numbersArray = string.match(/(\d+|-|\/|,)/g);
+  var result = [parseInt(string[0], 10)]
+  numbersArray.forEach(function(number, index) {
+    if (index < 2 || number.match(/[^0-9]/)) return;
+    var number2 = String(result.slice(-1));
+    var sign = numbersArray[index-1];
+    addNumbers(number, number2, sign, result);
+  })
+  return result;
+}
+
+function addNumbers(number, number2, sign, result) {
+  number = calculate2ndNumber(number, number2);
+  if (sign == ",") {
+    result.push(parseInt(number))
+  } else {
+    for (var i = number + 1; i <= number2; i++) {
+      result.push(parseInt(i));
     }
   }
 }
 
-function printLine(outside, inside) {
-  var line = "";
-  line += " ".repeat(outside) + ("*" + " ".repeat(inside)).repeat(3);
-  return console.log(line);
+function calculate2ndNumber(number, number2) {
+  if (parseInt(number2, 10) < parseInt(number, 10)) return number;
+  var diff = number2.length - number.length;
+  if (diff > 0) {
+    number = diff + number;
+    if (parseInt(number, 10) < parseInt(number2, 10)) {
+      diff = String(parseInt(diff, 10) + 1);
+      number = diff + number.slice(diff.length);
+    }
+  } else {
+    number = "1" + number;
+  }
+  return number;
 }
 
-console.log(star(7));
+expand("1, 3, 8, 2, 4, 6, 2, 1")

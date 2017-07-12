@@ -1,0 +1,496 @@
+when we use the term, "SQL Statement", we mean a SQL command used to access/use the database or the data within that database via the SQL 
+language.
+the term, "SQL query" or "SQL queries", is a bit more specific. It is a subset of a "SQL Statement". A query is a way to search, to lookup data
+within a database.
+
+$ createdb sql_book
+
+
+dropdb sql_book
+
+$ pg_dump --inserts --clean sql_book
+
+$ pg_dump --inserts --clean sql_book > dump.sql
+
+
+\l or \list displays all databases
+\c library  change current database to library
+\dt displays all tables for the current database
+
+
+
+
+The PRIMARY KEY (id) option specifies the id column as a primary key of this table.
+
+In order for the database to keep track of all the records, each record (or row of data) must be uniquely identifiable in some way. For this
+ purpose, databases use a concept called primary keys.
+
+A primary key is a column that acts as a unique identifier for a row. A table can only have one primary key column, and all values in the
+ primary key column must be unique throughout the table. In the example above, we're specifying the id field as the primary key for the users
+  table.
+
+
+psql -d library Select the database to use
+CREATE TABLE users..  Creates a new table called users
+\dt Shows the tables in the current database
+\d users  Shows the schema of the table
+
+
+\d users  displays the structure of a table
+INSERT INTO users (username) VALUES ('John Smith')  creates a new record in users table with username John Smith
+
+SELECT * FROM users Select all columns from table users.
+SELECT username,id FROM users ORDER BY id ASC Select the columns username, id from table users and sort the result in ascending order based on
+ the id.
+SELECT username FROM users WHERE enabled = true Select the column username which is enabled.
+
+UPDATE users SET enabled = true WHERE username = 'John Smith II'; Updates the enabled field of the record with username John Smith II in the
+ users table to true
+DELETE FROM users WHERE username = 'John Smith' Delete the record with username John Smith from the users table
+
+The command above adds a new column to the users table with the name last_login, a datatype of timestamp and a default value based on the
+ function NOW(). Let's see what our table looks like with the new column by running the meta command \d and using the table name as an argument:
+
+
+timestamp: So far we have seen CHAR and INT datatypes. As the name implies, timestamp, is a datatype that allows storage of date and time. 
+The following is an example of timestamp data: '2005-11-22 05:16:45'
+NOW() is another SQL FUNCTION. It provides the current date and time when it is called. There are many such functions available and we will 
+look at some of the common ones in subsequent chapters.
+
+ALTER TABLE users ADD COLUMN last_login timestamp NOT NULL DEFAULT NOW(); Alters the table users by adding column last_login with a datatype 
+of timestamp, and with a default value of the function NOW based on when the record gets inserted
+ALTER TABLE users RENAME COLUMN username TO full_name;  Alters the table users by renaming the column username to full_name
+ALTER TABLE users ALTER COLUMN full_name TYPE VARCHAR(15);  Alters the table users by changing the datatype of column full_name to VARCHAR(15)
+ALTER TABLE users DROP COLUMN enabled Alters the table users by deleting the column enabled
+ALTER TABLE users RENAME TO all_users;  Rename the table users to all_users
+DROP TABLE all_users; permanently deletes the table all_users from the database library
+
+If we break out the data into separate tables, we need tables for Users, Addresses, Books and Reviews. We've mentioned relational databases 
+a lot, but haven't talked a lot about what that relational part means. Now that we know which tables we need, we also need to map the 
+relationships between these tables, sometimes known as entities.
+
+The relationships we need to model are
+
+One User has MANY books that he/she may have checked out or returned.
+A Book is/has been checked out by MANY users.
+One Book has MANY reviews.
+One User has MANY reviews.
+A User has ONE address.
+Let's take a look at the design of these four tables together, we will then explain how each of these relationships is modeled individually. 
+To describe the overall design, we are using an entity relationship diagram or ERD, of the tables.
+
+
+What is an ERD?
+
+An entity relationship diagram is a graphical representation of entities and their relationships to each other. An entity represents a real 
+world object, a piece of data that we want to model within our database.
+
+
+A one-to-one relationship between two entities exists when a particular entity instance exists in one table, and it can have only one associated 
+entity instance in another table.
+
+
+A one-to-many relationship exists between two entities if an entity instance in one of the tables can be associated with multiple records
+ (entity instances) in the other table. The opposite relationship does not exist; that is, each entity instance in the second table can only
+  be associated with one entity instance in the first table.
+
+Example: A book has many reviews. A review belongs to only one book.
+
+In the database world, this sort of relationship is implemented by ensuring that the book_id that is the PRIMARY KEY of the books table is a
+ FOREIGN KEY of the reviews table
+
+
+
+A many-to-many relationship exists between two entities if for one entity instance there may be multiple records in the other table and vice
+ versa.
+
+Example: A user has many books checked out or may have checked them out in the past. A book has many users that have checked a book out.
+
+In the database world, this sort of relationship is implemented by introducing a third cross-reference table, that holds the relationship
+ between the two entities, which is the PRIMARY KEY of the books table and the PRIMARY KEY of the user table.
+
+Look at the line PRIMARY KEY (user_id, book_id). The primary key is not a single key, but a composite key based on user_id and book_id.
+ Therefore, the pair has to be unique.
+
+
+A database must adhere to certain properties to maintain the integrity and quality of the data that it is storing. Keys and Constraints are
+ rules that define what data values are allowed in certain data columns. They are an important database concept and are part of a database's
+  schema definition. Defining Keys and constraints is part of the database design process and ensures that the data within a database is
+   reliable and maintains its integrity. Constraints can apply to a specific column, an entire table, more than one table, or an entire schema.
+    A reliable database system ensures that constraints hold at all times. Keys are a special type of constraint used to establish relationships
+     and uniqueness.
+
+
+
+A necessary part of establishing relationships between two entities or two pieces of data is identifying the data correctly. In SQL, uniquely
+ identifying data is critical. A Primary Key is a unique identifier for a row of data. In the spreadsheet analogy we've used so far, there's
+  always been an id column. While any column can serve as the primary key, using a column named id is easy for mnemonic reasons and is a popular
+  convention. In an RDBMS, each table can have only one Primary Key.
+
+A primary key is a guaranteed unique identifier for a row in a table. Because of this, we can use a row's primary key value to reference that
+ row from other tables. In the previous chapter, we established relationships between multiple tables based on that, but relational databases
+  need a way to relate to each other, and the primary key column is a way to do this efficiently. In PostgreSQL, primary keys are also given
+   performance benefits as it's known that they'll be frequently used to look up data, especially in multi-table lookups.
+
+
+
+Foreign key columns are used to reference another row of data, perhaps in another table. In order to reference another row, the database needs a 
+unique identifier for that row. Therefore, foreign key columns contain the value of the referenced row's primary key. For instance, a table 
+might have a column called user_id as a foreign key column, which corresponds to the id column of the users table. Foreign keys are how RDBMS 
+sets up relationships between rows of data, either in the same table or across tables.
+
+
+When a primary_key consists of a unique pair PRIMARY KEY (user_id, book_id), it is known as a composite key. It usually occurs in many-to-many 
+relationships, and we need to add an extra table to store this relationship data. The composite key ensures that the data in the table will be
+ unique for the relation between the user and book. Example:
+
+
+
+SELECT CONCAT(title,' by ', author) AS "Books By" FROM books;
+
+Notice that we use single quotes instead of double quotes in the example above. It's important to keep this difference in mind. In PostgreSQL,
+you will almost always want to use single quotes when comparing values or when trying to specify a string value. In the code example above, 
+using single quotes allows us to specify a string 'John Smith', and then we can compare that string to the current value of username
+
+If we use double quotes, this would instruct PostgreSQL to do something else entirely. Double quotes are used to specify an identifier. In that 
+case, PostgreSQL would look for some column in the table users called "John Smith" and then compare it to username.
+
+
+LIKE '%ing' will match any field ending in 'ing' (the % signifying 'anything before this')
+LIKE 'user%' will match any field that starts with user (the % signifying 'anything after this')
+LIKE '%and%' will match any field that has 'and' (the % signifying anything surrounding this)
+
+Date/Time
+
+CURRENT_DATE - returns the current date in DATE format
+CURRENT_TIME - returns the current time in TIME format
+NOW() - returns the full date and time in TIMESTAMP format
+
+
+finance=# SELECT SUM(paid_out), TO_CHAR(date, 'Month') FROM transactions GROUP BY TO_CHAR(date, 'Month');
+
+
+SELECT SUM(paid_out), EXTRACT(MONTH FROM date) FROM transactions GROUP BY EXTRACT(MONTH FROM date);
+
+
+Separating this data into two tables is called normalizing the database. Normalizing is the process of organizing data effectively in tables. In 
+our example above, adding multiple columns lets the user get to the same information from both columns. However, it restricts future growth. On 
+the other hand, adding multiple records results in duplicate data, but permits data in normal form and future growth.
+
+In order to determine what type of column should be used, start by thinking about the data that will be stored in the column:
+
+Is the data numerical (numbers 0-9) or alphanumerical (numbers 0-9, letters a-z and A-Z)?
+If the data is numerical, does it contain negative numbers? What is the largest value it is likely to hold?
+Are there multiple possible values?
+Are there multiple possible values from a limited set of values?
+Do possible values contain binary data?
+Is the data related to dates and time?
+Is the data a flag for a true/false condition?
+After you answer the above questions, you can then start to choose a type for your column.
+
+Below are some examples of data and their associated column type:
+
+Data  Column Type
+Full name String with a sensible maximum length.
+Age Integer with sensible maximum value.
+Blog post String with higher maximum length.
+Month of the year ENUM that contains a set of values for all months.
+Money Numeric with a decimal point.
+
+
+
+library=# CREATE TYPE day AS ENUM('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+CREATE TYPE
+library=# CREATE TABLE messages (
+id SERIAL,
+day_of_week DAY DEFAULT NULL,
+message VARCHAR(255) NOT NULL,
+PRIMARY KEY (id)
+);
+CREATE TABLE
+
+
+
+Signed vs. Unsigned Values
+
+Integer values are often described as being signed or unsigned. The real difference between the two is that a 'signed' numerical 
+value can be a negative number, and an 'unsigned' value can only be a positive number. PostgreSQL does not have unsigned values like 
+some other RDBMSs. An unsigned value can be simulated though, if we use a CHECK constraint that ensures an integer column is only positive.
+
+
+
+If you paid close attention, here you'll have noticed something. I set the column data type to DECIMAL(13,2). In the last two examples I
+ entered 12.356 and 12.354 and got 12.36 and 12.35 in return.
+
+PostgreSQL has "rounded" the value specified to try to fit it to the number of decimal places, the 2 in DECIMAL(13,2). The DECIMAL type uses 
+the same kind of rounding you may have been taught in school, where 0-4 will "round down" and 5 and above will "round up" :
+
+0.512 will round to 0.51
+0.514 will round to 0.51
+0.515 will round to 0.52
+Handling monetary values
+
+If your table is handling money and you need extremely precise figures, especially when aggregating data, there are guidelines on how to do
+ so in PostgreSQL. A number of people recommend DECIMAL(13,2) as the type of choice. The value 13 represents the number of digits to hold in 
+ total, the 2 specifies how many digits to hold after the decimal point.
+
+
+DATE
+
+The DATE type is a simple date in MM-DD-YYYY format.
+
+TIMESTAMP
+
+This field comes with some useful functions:
+
+date_part(text, timestamp) returns the numerical value, specified by text, where text represents an individual part of a timestamp. For
+ instance, we can grab the numerical value of a month from a timestamp. For example, if the month in a timestamp is February, then the 
+ returned result will be 2. The following example would return 2:
+date_part('month', timestamp '2016-02-12 12:21:30')
+NOW() returns the current date and time.
+The TIMESTAMP type contains both a simple date and time in YYYY-MM-DD HH::MM:SS format. It allows NOW() as a default value so the field
+ can
+ have a field filled out at the time the row was created. For instance:
+
+library=# ALTER TABLE users ADD COLUMN date_created TIMESTAMP DEFAULT NOW();
+ALTER TABLE
+An example of how this works in practice:
+
+Table "public.users"
+    Column    |            Type             |                     Modifiers
+--------------+-----------------------------+----------------------------------------------------
+ id           | integer                     | not null default nextval('users_id_seq'::regclass)
+ full_name    | character varying(255)      | not null
+ enabled      | boolean                     | default false
+ date_created | timestamp without time zone | default now()
+Indexes:
+"users_pkey" PRIMARY KEY, btree (id)
+
+library=# SELECT * FROM users;an
+ id | full_name  | enabled |        date_created
+----+------------+---------+----------------------------
+  1 | Jack Smith | f       | 2016-05-10 12:54:42.968132
+  2 | John Smith | f       | 2016-05-10 12:54:42.968132
+(2 rows)
+See how the type for our timestamp column reads, "timestamp without time zone"? In PostgreSQL, the timezone may be included when defining a 
+timestamp column. If we want to include the currently set timezone, then we use TIMESTAMP WITH TIMEZONE when we create a table with a timestamp
+ column. There's also an abbreviation for including the timezone, TIMESTAMPTZ; using this will give us the same result.
+
+TIME
+
+The TIME type can contain both 24 hour time values in HH:MM:SS or larger values for time quantities. When used for this purpose it can store
+ values between '-838:59:59' and '838:59:59'.
+
+INTERVAL
+
+The INTERVAL type is very flexible. It represents a certain period of time that can be in seconds, minutes, or hours. It can also be used to 
+specify a stretch of time in centuries, months, years, and days. Here are some examples:
+
+INTERVAL '3' - An interval of 3 seconds. INTERVAL '5' YEAR - An interval of 5 years. INTERVAL '2-5' YEAR TO MONTH - An interval of 2 years, 5 
+months
+
+Typically, an interval type will either be in the format of years-months or days hours-minutes-seconds. PostgreSQL lets us specify both 
+together with an alternative syntax:
+
+INTERVAL '2 years 3 months 5 days 10 hours 22 minutes 55 seconds' - 2 years, 3 months, 5 days, 10 hours, 22 minutes, 55 seconds.
+
+More about the INTERVAL type and other date/time types can be found here.
+
+Note: There are several date/time functions that PostgreSQL gives us. Any function that deals with a span of time usually returns a value of
+ type interval (e.g. if you subtract two timestamps you are given an INTERVAL in return).
+
+
+
+
+varchar(length) character up to length characters of text canoe
+text  character unlimited length of text  a long string of text
+integer numeric whole numbers 42, -1423290
+real  numeric floating-point numbers  24.563, -14924.3515
+decimal(precision, scale) numeric arbitrary precision numbers 123.45, -567.89
+timestamp date/time date and time 1999-01-08 04:05:06
+date  date/time only a date 1999-01-08
+boolean boolean true or false true, false
+
+
+
+SELECT title, extract(year from current_date) - year AS age FROM films ORDER BY age ASC;
+
+
+SELECT substr(email, strpos(email, '@') + 1) as domain, COUNT(id) FROM people GROUP BY domain ORDER BY count DESC;
+
+
+ALTER TABLE employees ALTER COLUMN vacation_remaining SET NOT NULL;
+
+
+
+ALTER TABLE employees ALTER COLUMN department SET DEFAULT 'unassigned';
+UPDATE employees SET department = 'unassigned' WHERE department IS NULL;
+ALTER TABLE employees ALTER COLUMN department SET NOT NULL;
+
+
+ALTER TABLE films ADD CONSTRAINT title_unique UNIQUE (title);
+
+
+ALTER TABLE films ADD CONSTRAINT director_name
+    CHECK (length(director) >= 3 AND position(' ' in director) > 0);
+
+
+List three ways to use the schema to restrict what values can be stored in a column.
+
+Data type (which can include a length limitation)
+NOT NULL Constraint
+Check Constraint
+
+
+sql-course=# ALTER TABLE colors ADD CONSTRAINT id_unique UNIQUE (id);
+
+
+
+INSERT INTO films (title, year, genre, director, duration)
+  VALUES ('The Bourne Identity', 2002, 'espionage', 'Doug Liman', 118);
+INSERT INTO films (title, year, genre, director, duration)
+  VALUES ('Wayne''s World', 1992, 'comedy', 'Penelope Spheeris', 95);
+
+
+
+
+SELECT year / 10 * 10 AS decade, genre, string_agg(title, ', ') AS films
+  FROM films GROUP BY decade, genre ORDER BY decade, genre;
+
+
+
+SELECT customers.id, customers.email, COUNT(DISTINCT tickets.event_id)
+  FROM customers INNER JOIN tickets on tickets.customer_id = customers.id
+  GROUP BY customers.id
+  HAVING COUNT(DISTINCT tickets.event_id) = 3;
+
+
+SELECT events.name AS event, events.starts_at, sections.name AS section, seats.row, seats.number AS seat
+  FROM tickets
+    INNER JOIN events ON tickets.event_id = events.id
+    INNER JOIN customers ON tickets.customer_id = customers.id
+    INNER JOIN seats ON tickets.seat_id = seats.id
+    INNER JOIN sections ON seats.section_id = sections.id
+WHERE customers.email = 'gennaro.rath@mcdermott.co';
+
+
+
+
+In database parlance, a foreign key can refer to two different, but related, things:
+
+A column that represents a relationship between two rows by pointing to a specific row in another table using its primary key. A complete name
+for these columns is foreign key column.
+A constraint that enforces certain rules about what values are permitted in these foreign key relationships. A complete name for this type of 
+constraint is foreign key constraint.
+
+
+
+
+
+Creating Foreign Key Columns
+
+To create a foreign key column, just create a column of the same type as the primary key column it will point to. Since the products table shown
+ above uses an integer type for its primary key column, orders.product_id is also an integer column.
+
+Creating Foreign Key Constraints
+
+To create a foreign key constraint, there are two syntaxes that can be used. The first is to add a REFERENCES clause to the description of a 
+column in a CREATE TABLE statement:
+
+CREATE TABLE orders (
+  id serial PRIMARY KEY,
+  product_id integer REFERENCES products (id),
+  quantity integer NOT NULL
+);
+The second way is to add the foreign key constraint separately, just as you would any other constraint (note the use of FOREIGN KEY instead of 
+CHECK):
+
+ALTER TABLE orders ADD CONSTRAINT orders_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(id);
+Referential Integrity
+
+One of the main benefits of using the foreign key constraints provided by a relational database is to preserve the referential integrity of 
+the data in the database. The database does this by ensuring that every value in a foreign key column exists in the primary key column of the
+referenced table. Attempts to insert rows that violate the table's constraints will be rejected.
+
+
+
+
+ALTER TABLE orders ADD CONSTRAINT orders_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(id);
+
+
+ALTER TABLE orders ALTER COLUMN product_id SET NOT NULL;
+
+
+
+sql-course=# SELECT calls.when, calls.duration, contacts.first_name
+sql-course-# FROM calls INNER JOIN contacts ON calls.contact_id = contacts.id
+sql-course-# WHERE contacts.first_name != 'William' AND contacts.last_name != 'Swift';
+
+
+films=# ALTER TABLE directors ADD CONSTRAINT valid_name
+films-#   CHECK (length(name) >= 1 AND "position"(name, ' ') > 0);
+
+
+
+ALTER TABLE planets
+ADD COLUMN star_id integer NOT NULL REFERENCES stars (id);
+
+
+ALTER TABLE stars
+ALTER COLUMN name TYPE varchar(50);
+
+
+ALTER TABLE stars
+ADD CHECK (spectral_type IN ('O', 'B', 'A', 'F', 'G', 'K', 'M')),
+ALTER COLUMN spectral_type SET NOT NULL;
+
+
+SELECT * FROM parts WHERE part_number::text LIKE '3%';
+
+
+UPDATE parts SET device_id = 1
+WHERE part_number=37 OR part_number=39;
+
+SELECT books.id, books.author, string_agg(categories.name, ', ') AS categories
+  FROM books
+    INNER JOIN books_categories ON books.id = books_categories.book_id
+    INNER JOIN categories ON books_categories.category_id = categories.id
+  GROUP BY books.id;
+
+
+ALTER TABLE books_categories ADD UNIQUE (book_id, category_id);
+
+
+CREATE TABLE directors_films (
+  id serial PRIMARY KEY,
+  director_id integer REFERENCES directors (id),
+  film_id integer REFERENCES films (id)
+);
+
+Notice that table above is named directors_films and not films_directors. The convention for naming tables in SQL is to use alphabetical 
+order when the table name consists of more than one word.
+
+
+CREATE TABLE customers_services (
+  id serial PRIMARY KEY,
+  customer_id integer REFERENCES customers (id)
+    ON DELETE CASCADE,
+  service_id integer REFERENCES services (id),
+  UNIQUE(customer_id, service_id)
+);
+
+
+SELECT customers.* FROM customers
+LEFT OUTER JOIN customers_services
+             ON customer_id = customers.id
+WHERE service_id IS NULL;
+
+
+SELECT customers.name, 
+       string_agg(services.description, ', ') AS services
+FROM customers
+LEFT OUTER JOIN customers_services 
+             ON customer_id = customers.id
+LEFT OUTER JOIN services 
+             ON services.id = service_id
+GROUP BY customers.id;

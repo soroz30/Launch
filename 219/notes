@@ -1,1 +1,147 @@
-MDN Documentation - Object, Array, Math, Time
+b = a++;    // equivalent of "b = a; a++;". so now b is 1 and a is 2
+c = ++a;    // equivalent of "++a; c = a;". so now c is 3 and a is 3
+
+
+var reaction = 'negative';
+
+switch (reaction) {
+  case 'positive':
+    console.log('The sentiment of the market is positive');
+    break;
+  case 'negative':
+    console.log('The sentiment of the market is negative');
+    break;
+  case 'undecided':
+    console.log('The sentiment of the market is undecided');
+    break;
+  default:
+    console.log('The market has not reacted enough');
+}
+
+
+
+if (test) return false;
+
+
+
+for (nick in nicknames) {
+  console.log(nick);
+  console.log(nicknames[nick]);
+}
+
+
+
+Object.keys(nicknames);  // [ 'joseph', 'margaret' ]
+
+
+
+https://launchschool.com/books/regex
+
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+
+
+
+https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/Array
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/Math
+
+
+
+return string.split(' ').slice(-2, -1)[0];
+
+https://launchschool.com/exercises/d066934b - zadanie z czasem
+https://launchschool.com/exercises/05aadd94 
+https://launchschool.com/lessons/0539330a/assignments/ba1faa1f - daty
+
+https://launchschool.com/exercises/b63d5e66 - fibonacci
+https://launchschool.com/exercises/6948ddb4 - problem z repeat " "
+
+
+  for (var i = 0; i < wordsArray.length; i++) {
+    if (wordsArray[i].length === 0) {
+      continue;
+    }
+
+    count[wordsArray[i].length] = count[wordsArray[i].length] || 0;
+    count[wordsArray[i].length] += 1;
+  }
+
+
+https://launchschool.com/exercises/50faecbd
+
+
+
+function negative(number) {
+  return Math.abs(number) * -1;
+}
+
+
+
+https://launchschool.com/exercises/204b3efa - sort
+
+function removeVowels(array) {
+  return array.map(word => word.replace(/[aeiou]/gi, ''));
+}
+
+https://launchschool.com/exercises/96764a36 - sposob
+
+
+
+function fibonacci(nth) {
+  if (nth <= 2) {
+    return 1;
+  } else {
+    return fibonacci(nth - 1) + fibonacci(nth - 2);
+  }
+}
+
+
+function fibonacci(nth) {
+  var previousTwo = [1, 1];
+  for (var i = 3; i <= nth; i++) {
+    previousTwo = [previousTwo[1], previousTwo[0] + previousTwo[1]];
+  }
+
+  return previousTwo[1];
+}
+
+
+var memo = {};
+function fibonacci(nth) {
+  if (nth <= 2) {
+    return 1;
+  } else {
+    if (memo[nth]) {
+      return memo[nth]
+    } else {
+      memo[nth] = fibonacci(nth - 1) + fibonacci(nth - 2);
+      return memo[nth];
+    }
+  }
+}
+
+
+https://launchschool.com/exercises/0f47f2e8 - wazne
+
+
+
+function numberSequence(n) {
+  var result = [];
+  var increment = 2;
+
+  for(var number = 1; number > 0; number += increment) {
+    result.push(number);
+    if (number === n) {
+      increment = -2;
+    }
+  }
+
+  return result;
+
+
+
+- przećwiczyć test cases: z ruby exercises, challenges i js small problems
