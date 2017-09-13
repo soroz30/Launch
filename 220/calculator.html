@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculator</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		function $(id_selector) {
+			return document.getElementById(id_selector);
+		}
+
+		window.onload = function() {
+			$("calculator").onsubmit = function(e) {
+				e.preventDefault();
+
+				var numerator = +$("numerator").value,
+					denominator = +$("denominator").value,
+					operator = $("operator").value,
+					result = 0;
+
+				if (operator === "+") {
+					result = numerator + denominator;
+				}
+				if (operator === "-") {
+					result = numerator - denominator;
+				}
+				if (operator === "*") {
+					result = numerator * denominator;
+				}
+				if (operator === "/") {
+					result = numerator / denominator;
+				}
+				$("result").innerHtml = result;
+			}
+		}
+	</script>
+</head>
+<body>
+
+	<div id="result"></div>
+
+	<form>
+		<input type="number" name="input-one" id="input-one">
+		<select name="operator" id="operator">
+			<option>add</option>
+			<option>subtract</option>
+			<option>multiply</option>
+			<option>divide</option>
+		</select>
+		<input type="number" name="input-two" id="input-two">
+		<input type="submit" value="submit">
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,1023 @@
+JavaScript objects may contain methods as well as properties. You can think of methods as Functions with a receiver. If it doesn't have an explicit receiver, it's a function. We call these two invocations forms "method invocation" and "function invocation," respectively. We'll discuss the distinctions and nuances between them in the next lesson, "Function Contexts and Objects." For now, we'll show you how to distinguish a function from a method invocation and talk about this, a local variable that is always available when a method executes.
+
+Within advance, this is the object that contains the object, counter. The function can use this to access and change the object's properties. Here, advance uses this to increment the count property in counter.
+
+Variables are often said to "store", "hold", or "contain" values. In the above code, we might say that counter holds the Object { count: 0 }. This gross simplification gives us a false impression of how the code works.
+
+Variables don't hold values; they hold references to those values. counter is a reference to the Object { count: 0 }. When we pass counter to increment(), JavaScript places an identical reference in thing. Both thing and counter reference the same Object.
+
+An Object is a useful organizational tool that collects related data and behavior together. The benefits of this organization become evident when an application uses more than one instance of a given Object type.
+
+You've probably heard of object-oriented programming, but what is it? How does it work in JavaScript? In the previous assignment, we looked at how we use objects. Now we'll focus on why we use them.
+
+At its core, object-oriented programming is a pattern that uses objects as the basic building blocks of a program instead of local variables and functions. 
+
+We can go further still by placing the behaviors that go along with the data in the same object. The object-oriented approach to programming puts data and procedures that manipulate that data into containers or objects. We no longer deal solely with primitives, or composites of primitives, but "smart" objects that can perform actions on the data they own. This way, we move complexity inside objects instead of exposing it globally. When we must make changes, we can restrict those changes to those objects; they don't ripple throughout the entire project. Maintenance is easier when we can limit the scope of changes.
+
+Refactoring can reduce duplication in a project's code, including this simple project. It's important to understand, though, that duplication reduction is not the goal: it's a side-effect.
+
+Compare the object-oriented code to the code with which we began. The object-based code is much easier to understand; the relationship between it and the data is readily evident.
+
+function makeVehicle(fuel, mpg) {
+  return {
+    fuel: fuel,
+    mpg: mpg,
+    range: function() {
+      return this.fuel * this.mpg;
+    }
+  };
+}
+
+JavaScript creates a global object when it starts running, which serves as the implicit execution context. In the browser, the global object is the window object. You can investigate this in your browser's console:
+
+Implicit Function Execution Context
+
+The implicit function execution context (also called implicit binding for functions) is the context for a function that you invoke without supplying an explicit context. JavaScript binds such functions to the global object.
+
+This example shows that binding a function to a context object occurs when you execute the function, not when you define it.
+
+Explicit Function Execution Context
+
+JavaScript lets us use the call and apply methods to change a function's execution context at execution time. That is, we can explicitly bind a function's execution context to an object when we execute the function.
+
+
+Give us your feedback
+Hard Binding Functions with Contexts
+
+In the previous assignment, we learned how to use call and apply to change a function's execution context. JavaScript also has a bind method that lets us bind a function to a context object permanently:
+
+Unlike call or apply, bind doesn't execute a function. Instead, it creates and returns a new Function, and permanently binds it to a given object. Since the binding is permanent, we can pass the function around without concern that its context will change; it won't.
+
+This time we got a result of NaN. Since we're calling our function from the global scope, the context variable this inside average is the window object rather than the temperatures array. If we want to use temperatures as our context, we must use call or apply. Both methods let us change the execution context, which changes the object that this references. They then execute the function with the new context. Let's see what happens when/ we pass temperatures as the first argument to these methods.
+
+DEALING WITH CONTEXT LOSS - vocabulary
+
+https://rainsoft.io/gentle-explanation-of-this-in-javascript/
+
+In JavaScript the situation is different: this is the current execution context of a function. The language has 4 function invocation types:
+
+function invocation: alert('Hello World!')
+method invocation: console.log('Hello World!')
+constructor invocation: new RegExp('\\d')
+indirect invocation: alert.call(undefined, 'Hello World!')
+Each invocation type defines the context in its own way, so this behaves slight different than developer expects.
+
+The key to understanding this keyword is having a clear view over function invocation and how it impacts the context. 
+This article is focused on the invocation explanation, how the function call influences this and demonstrates the common pitfalls of identifying the context.
+
+Before starting, let's familiarize with a couple of terms:
+
+Invocation of a function is executing the code that makes the body of a function, or simply calling the function. For example parseInt function invocation is parseInt('15').
+Context of an invocation is the value of this within function body. For example the invocation of map.set('key', 'value') has the context map.
+Scope of a function is the set of variables, objects, functions accessible within a function body.
+
+Method invocations use an explicit execution context, e.g., array.forEach(processElement), while function invocations an implicit execution context, e.g., parseInt(numberString).
+
+All JavaScript code executes within a context. The top level context in a web browser is the window object. All global methods and Objects (such as isNaN or Math) are properties of this object.
+
+You can't use delete to delete variables and functions defined at the global scope:
+
+var car = 1;
+
+function speak() { ... }
+this is the current execution context of a function.
+
+The value of this changes based on how you invoke a function, not how you define it.
+
+JavaScript has first-class functions which have the following characteristics:
+
+You can add them to objects and execute them in their contexts.
+You can remove them from their objects, pass them around, and execute them in entirely different contexts.
+They're initially unbound, but dynamically bound to a context object at execution time.
+call and apply invoke a function with an explicit execution context.
+
+bind permanently binds a Function to the context of an object.
+
+A function included in an object that can operate on data within that object is a method.
+
+All functions, regardless of syntax, obey the same lexical scoping rules:
+
+It can access any variables defined within it.
+It can access any variables that were in scope based on the context where the function was defined.
+
+Higher-order functions either accept a function as an argument or return a function when invoked. In other words, higher-order functions work with other functions.
+
+To understand this concept, you must think of JavaScript functions as values; functions are a data type like strings, numbers, and objects. We know that they can take values as input and return a value as output. Thus, a higher-order function is one where either an input or output value is a function.
+
+A higher-order function can both take a function as an argument and return a function. Consider the following function, timed, that records how long it takes another function to run:
+
+> helloFactory();              // helloFactory() returns a function.
+= function() {...}
+
+> helloFactory()();            // Immediate function invocation of return value
+hi
+
+To review, higher-order functions work with other functions as arguments, return values, or both.
+
+Functions close over or enclose the context at their definition point, so we call them closures. They always have access to that context, regardless of when and where the program invokes the function. Here's some code that uses a closure to increment and log a number with each call:
+
+Why use closures to make data private?
+
+As shown above, you have choices about how to organize your code and data. Using closures to restrict data access is a good way to force other developers to use the intended interface. By keeping the collection of items private, we enforce access via the provided methods.
+
+This restriction helps protect data integrity since developers must use the defined interface. In this simple case, data integrity isn't a big concern, but the code illustrates the point; you must use add to add an item to the list, which ensures that we log every addition. We'll see another example in the next assignment; there, we'll prevent unauthorized data modification.
+
+These benefits have a cost. For instance, making data private can make it harder to extend the code. Suppose we need to add a clear method to delete all items from the list. If items is a property, we can do this:
+
+JavaScript is a garbage-collected language; it automatically cleans up values and objects when the program no longer needs them. As developers, we don't often have to worry about managing memory, though we sometimes need to concern ourselves with how much memory we use.
+
+Programming languages that don't have garbage collection, GC for short, make the developer write code to allocate (claim) memory for data, and to deallocate (unclaim or release) memory when it no longer needs the data. This process is messy and error-prone, which often leads to serious bugs and "memory leaks."
+
+Suppose we have a fictional version of JavaScript that doesn't use GC. Programs written in this fictional JavaScript make the developer manage memory allocation and deallocation for every object or primitive value. The code might look something like this:
+
+When you create a closure, it stores a reference to all variables it can access. Each of those variables references an object or primitive value. As long as the closure exists, those variables remain in existence, which means that the objects or values they reference must also endure. For this reason, JavaScript can't garbage collect any objects or values referenced by the variables that the closure keeps in its context.
+
+The terms primary, generator, and applicator are for convenience in this assignment; you won't find them discussed elsewhere. We won't use them in the future, so don't bother memorizing them.
+An immediately invoked function expression (IIFE) is a function that we define and invoke simultaneously. It looks like this:
+(function() {
+  console.log('hello');
+})();                     // hello
+
+JavaScript functions create closures when invoked.
+Closures let a function access any variable that was in scope when the function was declared.
+Values that are no longer accessible from anywhere in the code are eligible for garbage collection, which frees up the memory that they used for reuse by other parts of the program.
+You can use closures to make variables "private" to a function or set of functions and inaccessible elsewhere.
+Closures allow functions to "carry around" values for later use.
+Higher-order functions are functions that take a function as an argument, return a function, or both.
+
+DOM nodes have different types; we see three here:
+
+Elements represent HTML tags
+Text nodes represent text that appears in the document.
+Comments represent the HTML comments.
+The DOM includes some other types that we can ignore for now.
+
+What about DOM Levels?
+
+"DOM Levels" (e.g. "DOM Level 1") are W3 standards specifications that define the DOM features that browsers should support. You may encounter references to specific DOM Levels when researching the DOM, but you don't need to remember this information. It's more important to know which features are available in modern browsers. For this, use the browser compatibility tables at the bottom of the MDN pages.
+
+To begin, let's use querySelector() to get a reference to one of the DOM nodes. This method returns the first node in the DOM that matches the specified CSS selector. There's a chicken-and-egg problem, though; to find a node with querySelector(), you must first have a node that you can use to call the method.
+
+The document node, which represents the entire HTML document, provides the solution to this problem. It's the top-most DOM node; that is, it's the parent of all nodes in the DOM.
+
+nodeName
+
+The nodeName property contains a String that represents the node type. For Elements (anything that represents an HTML tag), this is the name of the corresponding tag in uppercase. The use of uppercase is a historical throwback to a time when standard practice was to write uppercase HTML tags; contemporary HTML uses lowercase tags, but this method still returns uppercase names.
+
+For text nodes -- even empty nodes -- the nodeName is "#text". For comments, it's "#comment".
+
+nodeType
+
+You can use the nodeType property to determine a node's type: it returns a number that matches a node type constant.
+
+Constant	Value	Description
+Node.ELEMENT_NODE	1	An Element representing an HTML tag
+Node.TEXT_NODE	3	A Text node
+Node.COMMENT_NODE	8	A Comment node
+Node.DOCUMENT_NODE	9	A Document node
+
+nodeValue
+
+The nodeValue property references the value of a node. Element nodes don't have values:
+
+Text nodes do, though. For a text node, the nodeValue is the textual content of the node. Let's look at our paragraph. To start, first extract the first text node from the DOM:
+
+> var t = p.childNodes[0];
+The local variable, t, now references the first child within the paragraph. By checking nodeName and the return value of toString(), we learn that t is a text node, that its nodeName is "#text", and that its type is Text.
+
+> t.nodeName;
+= "#text"
+> t.toString();
+= "[object Text]"
+Since the p node represents the <p> tag, its child nodes represent its contents; here, we have some text and a link. The first child node of p (t) has a nodeValue property that contains the first sentence of text from the paragraph:
+
+> t.nodeValue
+= "To receive our weekly emails, enter your email address below. "
+
+DOM objects come in different types: Nodes, Elements, Text, and more. The Element type is further broken down into dozens of subtypes. Trying to determine the exact object type can be confusing. Here's what you need to know:
+
+All DOM objects are Nodes.
+All DOM objects have a type that inherits from Node, which means they all have properties and methods they inherit from Node.
+The most common DOM object types you will use are Element and Text.
+
+Almost every HTML tag has it's own Element subtype, though not all. Most browsers, for instance, don't support the HTMLTableDataCellElement and HTMLTableHeaderCellElement types that correspond to the <td> and <th> tags. They both map to a shared and more general HTMLTableCellElement type. (The MDN documentation, at this writing, incorrectly states that both HTMLTableDataCellElement and HTMLTableHeaderCellElement exist in all browsers, but, in truth, they're unique to Microsoft browsers.)
+
+Here is what you need to remember about the different types:
+
+EventTarget provides the event-handling behavior that supports interactive web applications. We'll study this in detail in an upcoming lesson.
+Node provides common behavior to all nodes.
+Text and Element are the chief subtypes of Node.
+Text nodes hold text.
+Element nodes represent HTML tags.
+
+Most HTML tags map to specific element subtypes that inherit from HTMLElement.
+Other element types exist, such as SVGElement and its subtypes.
+
+The technique most useful on the console uses the toString() method or the String() constructor on the node; you can read the name from the display:
+
+> p.toString();
+< "[object HTMLParagraphElement]"
+For most nodes, the return value of toString() and String() is the Node type's name, but not all node types behave so well. HTMLAnchorElement (an <a> tag), for instance, is different:
+
+> var a = document.querySelector('a');
+> a
+< <a href="http://domain.com/page">…</a>
+> a.toString();
+< "http://domain.com/page"
+HTMLAnchorElement implements toString() in a way that causes it to return the URL from the link. Customized toString() methods like this exist for some other Elements as well.
+
+This inconsistency is bothersome, of course. As a workaround, you can call the Node's constructor property; it references a function that creates Objects of the appropriate Element type. The value is browser-dependent, though, which adds some clumsiness when using it.
+
+Chrome
+> document.querySelector("a").constructor
+< function HTMLAnchorElement() { [native code] }
+Firefox
+> document.querySelector("a").constructor
+< function()
+> document.querySelector("a").constructor.name; /* Note use of .name property! */
+< "HTMLAnchorElement"
+Safari
+> document.querySelector("a").constructor
+< function HTMLAnchorElement() {
+      [native code]
+  } = $1
+Edge
+> document.querySelector("a").constructor
+< function HTMLAnchorElement() { [native code] }
+Regardless of which browser you use, the named Function is the Function that created the Node, so it's easy to determine the node type. Note that some older browsers append a trailing Constructor to the Function name -- you should ignore it if present.
+
+If you're writing a program, you should probably use the instanceof function or tagName property.
+
+instanceof checks whether an object has a type that matches or inherits from a named type.
+
+> var p = document.querySelector('p');
+> p instanceof HTMLParagraphElement;
+< true
+> p instanceof HTMLAnchorElement;
+< false
+> p instanceof Element;
+< true
+The downside here is that you have to test against a particular Element type. If all you need to know, though, is whether a Node is an Element, you can 
+test it with instanceof Element:
+
+> p instanceof HTMLElement;
+< true
+> p instanceof Element;
+< true
+> p instanceof Node;
+< true
+> p instanceof SVGElement;
+< false
+Checking an Element's type in this way is common in code that must process two or more different Element types with different actions based on the Element type.
+
+If you don't need to know the type name, you can use the tagName property to check its HTML tag name instead. (Remember that this property has an uppercase value.)
+
+> p.tagName
+< "P"
+
+DOM nodes connect with other DOM nodes via a set of properties that point from one node to another with defined relationships. For example, the childNodes property returns a collection of the nodes directly beneath a given node. Each element in the returned collection has a parentNode property that points back to the original node.
+
+You should know these properties of parent nodes:
+ 
+Parent Node Properties	Value
+firstChild	childNodes[0] or null
+lastChild	childNodes[childNodes.length-1] or null
+childNodes	Live collection of all child nodes
+
+Child Node Properties	Value
+nextSibling	parentNode.childNodes[n+1] or null
+previousSibling	parentNode.childNodes[n-1] or null
+parentNode	Immediate parent of this node
+
+All DOM nodes that represent elements have both parent and child nodes. Thus, they have both sets of the above properties. Whether a node has a non-null value for a given property, though, depends on the DOM that contains the node. For example, the last child of a node has a null value for nextSibling; all other child nodes have non-null values for nextSibling.
+
+Walking the tree is a term that describes the process of visiting every node that has a child, grandchild, etc. relationship with a given node, and doing something with each of them. We use a recursive function to do this.
+
+We haven't looked at recursion in JavaScript yet, and a full exploration is a bit beyond our current needs. For now, all you must know is that a recursive function is a function that calls itself. Let's look at a simple recursive function before we work with one on the DOM.
+
+If you feel that you're not grasping this concept yet, don't worry. For now, all you need to know is that a recursive function:
+
+returns to the previous level of recursion when it's gone as far as it can.
+performs a bit of processing.
+calls itself with a "smaller" argument.
+We don't use Arrays when walking the tree in the DOM. Instead, we use DOM nodes. Each "smaller" argument is a child of the current node. Here is some code that does this:
+
+function walk(node) {
+  console.log(node.nodeName);                        // do something with node
+  for (var i = 0; i < node.childNodes.length; i++) { // for each child node
+    walk(node.childNodes[i]);                        // recursively call walk()
+  }
+}
+walk(document.body);                                 // log nodeName of every node
+
+The downside to this implementation is that walk both walks the tree and does something with each node, which makes it hard to reuse the node-walking functionality without duplicating code. A better solution separates walk into two Functions: one walks the tree (we'll continue to call it walk) and another does something with a node. We'll pass the second Function to walk as an argument:
+
+// walk() calls the Function "callback" once for each node
+function walk(node, callback) {
+  callback(node);                                    // do something with node
+  for (var i = 0; i < node.childNodes.length; i++) { // for each child node
+    walk(node.childNodes[i], callback);              // recursively call walk()
+  }
+}
+
+walk(document.body, function(node) {                 // log nodeName of every node
+  console.log(node.nodeName);
+});
+
+We can access the attributes of an Element using these methods:
+
+Method	Description	Returns
+getAttribute(name)	Retrieve value of attribute name	Value of attribute as String
+setAttribute(name, newValue)	Set value of attribute name to newValue	undefined
+hasAttribute(name)	Check whether element has attribute name	true or false
+
+Attribute Properties
+
+getAttribute() and setAttribute() work for all attributes, but you can access some attributes another way. The DOM exposes these special attributes as properties of the Element: id, name, title, and value. You can fetch the value for one of these properties or set it to a new value using standard property access and assignment operations:
+
+> p;
+= <p class="intro" id="simple">…</p>
+> p.id
+= "simple"
+> p.id = "complex"
+> p;
+= <p class="intro" id="complex">…</p>
+Not every Element type has these properties: the name and value attributes, in particular, are invalid on most elements.
+
+The class attribute is similar, but uses the className property since class is a JavaScript reserved word:
+
+> p.className;
+= "intro"
+> p.className = "outro";
+
+Working with the class attribute via className is inconvenient when elements have more than one class. This is common in some applications. Consider the following HTML:
+
+<button class="btn btn-lg btn-primary">Proceed</button>
+If we have a reference to the DOM node for this button, we can get the list of classes for the button:
+
+> button.className
+= "btn btn-lg btn-primary"
+Since the value is a space-delimited set of names, interacting with className can be clumsy. Let's say we need to replace btn-primary with btn-disabled. To do this, we must get the String from className, use replace to change it, and then use the result to set a new value for button.className:
+
+> var newClass = button.className.replace('btn-primary', 'btn-disabled');
+> button.className = newClass;
+= "btn btn-lg btn-disabled"
+> button;
+= <button class="btn btn-lg btn-disabled">…</button>
+As another example, consider how we determine whether the button belongs to the btn class? Keep in mind that class may contain class names in any order. To make this determination, you must split className's value using spaces as a delimiter, then search the Array to see whether it contains the string btn. You can do this, but it's tedious, and something you will need often.
+
+Modern browsers provide a better way with the classList property. classList references a special Array-like DOMTokenList object that has these properties and methods:
+
+Name	Description
+add(name)	Add class name to element
+remove(name)	Remove class name from element
+toggle(name)	Add class name to element if it doesn't exist, remove if it does exist.
+contains(name)	Return true or false depending on whether element has class name.
+length	The number of classes to which element belongs.
+
+Element nodes also have a style attribute that has some special behavior. The style attribute on an Element references a CSSStyleDeclaration Object:
+
+> var h1 = document.querySelector("h1")
+> h1.style
+= CSSStyleDeclaration {alignContent: "", alignItems: "", alignSelf: "", alignmentBaseline: "", all: "", …}
+You can use the style attribute to alter any CSS property. For example, you can change the color of a heading to red:
+
+> h1.style.color = 'red';
+To remove a CSS property, set the property to null with the style property:
+
+> h1.style.color = null;
+
+You can use the data property to retrieve the textual content of a node. This property belongs to the CharacterData DOM interface. It represents the textual data in the node as a DOMString object, which is a String-like object you can treat as a string.
+
+var words = [];
+walk(document, function(node) {
+  if (node.nodeName === "P") {
+    var text = node.firstChild.data.trim();
+    var firstWord = text.split(" ")[0];
+    words.push(firstWord);
+  }
+});
+
+In HTML/JavaScript applications, we often need to find an Element based on its id attribute. The built-in method getElementById on document provides this behavior.
+
+Method	Returns
+document.getElementById(id)	Element with given id
+
+function addClassToParagraphs(node) {
+  if (node instanceof HTMLParagraphElement) {
+    node.classList.add("article-text");
+  }
+
+  var nodes = node.childNodes;
+  for (var i = 0; i < nodes.length; ++i) {
+    addClassToParagraphs(nodes[i]);
+  }
+}
+
+addClassToParagraphs(document.body);
+
+getElementsByTagName() is so useful that the DOM provides a similar method for all Elements, and another method that does the same thing for class names:
+
+Method	Returns
+document.getElementsByTagName(tagName)	HTMLCollection or NodeList of matching Elements
+document.getElementsByClassName(className)	HTMLCollection or NodeList of matching Elements
+
+What is a HTMLCollection or NodeList?
+
+Both types are Array-like objects, which means they are containers for other objects indexed by non-negative integers.
+
+Like other Array-like Objects, they do not support forEach or other Array methods. (NodeLists on some browsers do support forEach, but not all browsers; HTMLCollections provides no support for forEach.) To loop through the elements returned by these methods, use a for loop or convert the object into an Array and then use the higher-order Array functions.
+
+var intros = document.getElementsByClassName('intro');
+for (var i = 0; i < intros.length; i++) {
+  var paragraphs = intros[i].getElementsByTagName('p');
+  for (var p = 0; p < paragraphs.length; p++) {
+    paragraphs[p].classList.add('article-text');
+  }
+}
+
+The last problem was starting to get messy due to the nested structure of the Elements in the DOM. As the DOM becomes larger and more complex, finding a given subset of Elements also grows more complicated.
+
+The proliferation of JavaScript libraries and frameworks have popularized an alternate way to find Elements. Instead of searching for a tag name, class name, or relationship, these tools use CSS selectors to find Elements with minimal effort. Selector searches have become so common that web browsers now provide built-in support for selector searches with these two methods:
+
+Method	Returns
+document.querySelector(selector)	First matching Element or null
+document.querySelectorAll(selector)	NodeList of matching Elements
+
+// using querySelectorAll
+var paragraphs = document.querySelectorAll('.intro p');
+for (var i = 0; i < paragraphs.length; i++) {
+  paragraphs[i].classList.add('article-text');
+}
+
+These properties often don't give you what you want, though; you probably want a list of Element Nodes without the Text and other Nodes mixed in. You can simplify your code if you can start with a list of Element Nodes alone, and don't have to ignore everything else. Another set of DOM properties provides the functionality you need; you can find them in the Element Nodes:
+
+Parent Element Properties	Value
+firstElementChild	children[0] or null
+lastElementChild	children[children.length-1] or null
+children	Live collection of all child elements
+childElementCount	children.length
+
+Child Element Properties	Value
+nextElementSibling	parentNode.children[n+1] or null
+previousElementSibling	parentNode.children[n-1] or null
+
+To change the value of that text content, use:
+
+> document.querySelector('a').textContent = "step backward"
+= "step backward"
+
+var div = document.querySelector('div');
+for (var i = 0; i < div.childNodes.length; i++) {
+  var node = div.childNodes[i];
+  if (node instanceof Text && node.nodeValue.indexOf('The time is') !== -1) {
+    var newText = node.nodeValue.replace(/\d{1,2}:\d{2} [a|p]m/, '9:16 am');
+    node.nodeValue = newText;
+  }
+}
+
+var h2s = document.querySelectorAll("h2");
+var h2Array = Array.prototype.slice.call(h2s);
+h2Array.map(function(element) {
+  return element.textContent.split(" ").length;
+});  // [1, 3, 3, 3, 1, 3, 1, 1, 5, 2, 2, 1, 1, 2, 2]
+
+var keys = ["Kingdom", "Phylum", "Clade", "Class", "Order", "Suborder", "Family",
+            "Genus", "Species"];
+
+var classification = {};
+
+var tds = document.querySelectorAll(".infobox td");
+
+for (var i = 0; i < tds.length; i++) {
+  var cell = tds[i];
+
+  keys.forEach(function(key) {
+    if (cell.textContent.indexOf(key) !== -1) {
+      var link = cell.nextElementSibling.firstElementChild;
+      classification[key] = link.textContent;
+    }
+  });
+}
+
+> var paragraph = document.createElement('p');
+> paragraph.textContent = 'This is a test.';
+> document.body.appendChild(paragraph);
+
+> var text = document.createTextNode('This is a test.');
+> var paragraph = document.createElement('p');
+> paragraph.appendChild(text);
+> document.body.appendChild(paragraph);
+
+You can create Nodes in two ways: you can create new empty Nodes with the document.create* methods, or you can clone an existing Node hierarchy:
+
+Node Creation Method	Returns
+document.createElement(tagName)	A new Element node
+document.createTextNode(text)	A new Text node
+node.cloneNode(deepClone)	Returns a copy of node
+If deepClone is true, cloneNode() makes copies of node and all its children; otherwise, cloneNode merely copies node. Don't rely on a specific default value for deepClone; it's changed over time, so always specify true or false to get what you want. In most cases, you'll use true to get a copy of the Node and its children.
+
+You can append, insert, and replace Nodes with methods on the Node's parent:
+
+Parent Node Method	Description
+parent.appendChild(node)	Append node to the end of parent.childNodes
+parent.insertBefore(node, targetNode)	Insert node into parent.childNodes before targetNode
+parent.replaceChild(node, targetNode)	Remove targetNode from parent.childNodes and insert node at its former position
+document.appendChild causes an error. Use document.body.appendChild instead.
+
+No Node may appear twice in the DOM. If you try to add a Node that is already in the DOM, it gets removed from the original location. Thus, you can move an existing Node by inserting it where you want it.
+
+These methods insert Nodes before, after, or within an Element:
+
+Element Insertion Method	Description
+element.insertAdjacentElement(position, newElement)	Inserts newElement at position relative to element
+element.insertAdjacentText(position, text)	Inserts Text Node that contains text at position relative to element
+position must be one of the following String values:
+
+Position	Description
+"beforebegin"	Before the element
+"afterbegin"	Before the first child of the element
+"beforeend"	After the last child of the element
+"afterend"	After the element
+
+When you remove a Node from the DOM, it becomes eligible for garbage collection unless you keep a reference to the Node in a variable. You cannot access an object that is eligible for garbage collection, so it's no longer available to your program.
+
+Element Method	Description
+node.remove()	Remove node from the DOM
+parent.removeChild(node)	Remove node from parent.childNodes
+
+document.getElementById('primary_heading').setAttribute('class', 'heading');
+
+document.getElementById('list').setAttribute('class', 'bulleted');
+
+document.getElementById('toggle').onclick = function(e) {
+  e.preventDefault();
+  var notice = document.getElementById('notice');
+  if (notice.getAttribute('class') === 'hidden') {
+    notice.setAttribute('class', 'visible');
+  } else {
+    notice.setAttribute('class', 'hidden');
+  }
+};
+
+document.getElementById('notice').onclick = function(e) {
+  e.preventDefault(); // for consistency: not needed here
+  this.setAttribute('class', 'hidden');
+};
+
+document.getElementById('multiplication').innerText = String(13 * 9);
+
+document.body.setAttribute('id', 'styled');
+
+The Document Object Model, or DOM, is an in-memory object representation of an HTML document. It provides a way to interact with a web page using JavaScript, which provides the functionality required to build modern interactive user experiences.
+
+The DOM is a hierarchy of nodes. Each node can contain any number of child nodes.
+
+There are different types of nodes. The types you should be familiar with are elements and text nodes.
+
+The whitespace in an HTML document may result in empty text nodes in the DOM.
+
+Useful properties of nodes include nodeName, nodeType, nodeValue, and textContent.
+
+Nodes have properties that traverse the DOM tree: firstChild, lastChild, childNodes, nextSibling, previousSibling, and parentNode.
+
+Element nodes have getAttribute, setAttribute, and hasAttribute methods to manipulate HTML attributes.
+
+Elements have properties that let you read and alter the id, name, title, and value.
+
+Elements let you read and change CSS classes and style properties via the classList and style properties.
+
+document.getElementById(id) finds a single Element with the specified id.
+
+document.getElementsByTagName(name) and document.getElementsByClassName(name) find any Elements with the specified tagName or class.
+
+document.querySelector(selector) returns the first Element that matches a CSS selector. document.querySelectorAll(selector) is similar but returns all matching elements.
+
+Elements have properties to traverse the DOM tree: firstElementChild, lastElementChild, children, nextElementSibling, and previousElementSibling.8
+
+You can create new DOM nodes with document.createElement(tagName) or document.createTextNode(text).
+
+You can create a copy of a node with node.cloneNode(deepClone).
+
+parent.appendChild(node), parent.insertBefore(node, targetNode), parent.replaceChild(node, targetNode), element.insertAdjacentElement(position, newElement), and element.insertAdjacentText(position, text) add nodes to the DOM.
+
+node.remove() and parent.removeChild(node) remove nodes from the DOM.
+
+The browser evaluates each line in this program, one at a time. For each line of code, the next line of code must wait until the current line completes. We call this sequential code since each line runs in sequence.
+
+Part of what makes JavaScript so useful is that it has first-class Functions; functions are a regular data type in the system. First-class functions mean we can write and use higher-order Functions, such as those provided by Array objects. Consider the following code:
+
+function logger(object) {        // define a Function logger
+  console.log(object);           // that logs its parameter
+}
+var numbers = [3, 7, 25, 39];    // set numbers to [3, 7, 25, 39]
+numbers.forEach(logger);         // call forEach with logger as a callback
+console.log(numbers.length);     // log 4
+Think about the sequence in which this code runs. If we number the lines as we did above, we end up with something like this:
+
+function logger(object) {        // 1
+  console.log(object);           // 4 5 6 7
+}
+var numbers = [3, 7, 25, 39];    // 2
+numbers.forEach(logger);         // 3
+console.log(numbers.length);     // 8
+Since forEach runs its callback function once for each element in numbers, the code in that function runs four times. This example shows that we are already comfortable with code that doesn't run in a straight line from top to bottom. It's still easy to reason about this code, though; it still executes lines of code sequentially, though each line may be someplace other than the next line in the file. JavaScript still evaluates one line at a time until the program finishes; it doesn't stop executing until it completes. We call this synchronous code; it starts right away and runs until the program ends.
+
+It's possible to write code that runs partly now, then pauses and continues to run later after a delay of milliseconds, minutes, hours, or even days. We call such code asynchronous code; it doesn't run continuously or even when the runtime encounters it. To illustrate how asynchronous code works, we need a way to make our code wait and run later.
+
+setTimeout() is a built-in JavaScript Function that takes two arguments: a callback Function and a time to wait specified in milliseconds (1/1000th of a second). It sets a timer that waits until the given time delay elapses, then invokes the callback Function:
+
+setTimeout(function() {
+  console.log('!');
+}, 3000);
+
+function makeLogger(number) {
+  return function() {
+    console.log(number);
+  }
+}
+
+function delayLog() {
+  for (var i = 1; i <= 10; i++) {
+    var logger = makeLogger(i);
+    setTimeout(logger, i * 1000);
+  }
+}
+
+Another built-in Function, setInterval, does something similar. Instead of invoking the callback once, though, it invokes it again and again at intervals until told to stop.
+
+In this animation, setInterval returns an identifier that we can later pass to clearInterval() to cancel the timer and stop the repeated execution of the callback. setInterval is useful when you must run some code at regular intervals. For instance, perhaps you need to auto-save a user's work in a large web form:
+
+function save() {
+  // Send the form values to the server for safe keeping
+}
+
+// Call save() every 10 seconds
+var id = setInterval(save, 10000);
+
+// Later, perhaps after the user submits the form.
+clearInterval(id);
+
+var counterId;
+
+function startCounting() {
+  var count = 0;
+  counterId = setInterval(function() {
+    count++;
+    console.log(count);
+  }, 1000)
+}
+
+function stopCounting() {
+  clearInterval(counterId);
+}
+
+An event is an object that represents some occurrence; it contains information about what happened and where it happened. The browser can trigger events as the page loads, when the user interacts with the page, and when the browser performs some action required by the program.
+
+User interfaces are inherently event-driven. An interface draws itself on the screen, and then it does nothing until a user interacts with it. That interaction could be a button-click, a finger-swipe, or even a shake of a motion-sensitive device. Such interfaces require the program to register some behavior that the event will trigger when it occurs.
+
+Since a lot of web applications consist mainly of a user interface, the code within them has two main tasks:
+
+Set up the user interface and display it.
+Handle events resulting from user or browser actions.
+Since we're working in the browser, we typically achieve #1 with HTML, which lets us focus on #2, handling events.
+
+In the following diagram, lines that begin with when describe actions the program takes in response to the appropriate event. The code that the browser runs in response to the event is an event listener.
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>title</title>
+    <meta charset="UTF-8">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var addButton = document.getElementById('add');
+        var output = document.getElementById('output');
+        var count = 0;
+
+        addButton.addEventListener('click', function(event) {
+          count++;
+          output.textContent = String(count);
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <p>
+      <span id="output">0</span>
+      <button id="add">Add One</button>
+    </p>
+  </body>
+</html>
+
+The browser loads the page and evaluates the JavaScript within the script tag. This code registers a callback to handle the DOMContentLoaded event when it fires (occurs) on document.
+
+The browser waits for an event to fire.
+
+The browser renders the page and then fires the DOMContentLoaded event on document.
+
+The browser invokes the event handler for DOMContentLoaded, which uses document.getElementById to get references to two DOM elements and initializes the variable count. It also registers an event listener for click events on addButton:
+
+The browser waits for an event to fire.
+
+When the user clicks the button, the click event fires and the browser runs the handler. The callback increments the value of count and updates the textContent of the #output span.
+
+The browser waits for an event to fire.
+
+We typically use the DOMContentLoaded event when we have JavaScript code that must access the DOM. The load event fires much later, after everything on the page loads, including images, videos, etc. Since load event may not occur for a long time after the page first appears, it isn't useful in most cases.
+
+Building an interactive web application means responding to user actions. Depending on the input device, the application, and the user, your application may need to detect and react to more than a dozen different user-initiated events:
+
+Event Type	Example Events
+Keyboard	keydown, keyup, keypress
+Mouse	mouseenter, mouseleave, mousedown, mouseup, click
+Touch	touchdown, touchup, touchmove
+Window	scroll, resize
+Form	submit
+In the rest of this lesson, we'll look at the different event types. Keep in mind that an event's type determines the kind of code it makes sense to run within an event handler, but registering and triggering events is the same for all.
+
+The rest of this lesson primarily focusses on JavaScript code that uses event listeners, also known as event handlers. Event listeners are Functions that the JavaScript runtime calls when a particular event occurs. There are four steps needed to setup an event handler:
+
+Identify the event you need to handle. User actions, the page lifecycle, and more can fire events.
+Identify the element that will receive the event. Depending on the event, the object could be a button, an input field, or any other element on the page.
+Define a Function to call when this event occurs. The Function will receive a single argument, an Event object. We'll learn more about Events later.
+Register the Function as an event listener. This step brings the first three together into a working system.
+
+function displayAlert() {
+  var message = document.getElementById('message').value;
+  alert(message);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var button = document.getElementById('alert');
+  button.addEventListener('click', displayAlert);  
+});
+
+Notice that we register displayAlert as the click listener within the DOMContentLoaded event handler. As we saw in the previous assignment, we can't access the button element until after the DOM is ready, so we must postpone this step until then.
+
+If all we need to know is that a click occurred, then it's easy to add some code to the handler to do what we need to do. What if we need more information about the event, though? The argument passed to the event handler provides this extra information; it's an Event object that provides contextual information about the event.
+
+Some useful properties that appear in Event objects include:
+
+Property	Description
+type	The name of the event (e.g., 'click')
+currentTarget	The next object that will receive notification of the event, i.e., an element that has an event handler for this event
+target	The initial object to receive notification of the event, i.e., the element clicked by the user
+
+document.addEventListener("click", function(event) {
+  var element = event.target;
+  var p = document.getElementById("message");
+  p.textContent = element.tagName;
+});
+
+Most events have properties specific to their type. For example, here are some available for mouse events:
+
+Property	Description
+button	A reference to the clicked button (null for non-click events)
+clientX	The horizontal position of the mouse when the event occurred
+clientY	The vertical position of the mouse when the event occurred
+Both clientX and clientY return values relative to the visible area of the page: the number of pixels from the upper-left corner of the browser's viewport.
+
+Keyboard-related events also have special properties:
+
+Property	Description
+which	The ASCII key code (a Number) that identifies the pressed key.
+key	The String value of the pressed key. Older browsers do not support this property.
+shiftKey	Boolean value that indicates whether the user pressed the shift key.
+altKey	Boolean value that indicates whether the user pressed the alt (or option).
+ctrlKey	Boolean value that indicates whether the user pressed the control key.
+metaKey	Boolean value that indicates whether the user pressed the meta (or command) key.
+Click into the following box and press keys on your keyboard to see how the browser fires keyboard events. Try using each of the following key types:
+
+Letters
+Symbols (using the shift key)
+Backspace
+Shift, Control, Alt, Command, etc.
+
+document.addEventListener('click', function(event) {
+  var x = document.querySelector('.x');
+  x.style.left = event.clientX.toString() + 'px';
+  x.style.top = event.clientY.toString() + 'px';
+});
+
+document.addEventListener('mousemove', function(event) {
+  var x = document.querySelector('.x');
+  x.style.left = event.clientX.toString() + 'px';
+  x.style.top = event.clientY.toString() + 'px';
+});
+
+document.addEventListener('keyup', function(event) {
+  var key = event.which;
+  var color;
+
+  if (key === 82) {
+    color = 'red';
+  } else if (key === 71) {
+    color = 'green';
+  } else if (key === 66) {
+    color = 'blue';
+  }
+
+  if (color) {
+    var x = document.querySelector('.x');
+    for (var i = 0; i < x.children.length; i++) {
+      var child = x.children[i];
+      child.style.background = color;
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var composer = document.querySelector('.composer');
+  var textarea = composer.querySelector('textarea');
+  var counter = composer.querySelector('.counter');
+  var button = composer.querySelector('button');
+  
+  function updateCounter() {
+    var length = textarea.value.length;
+    var remaining = 140 - length;
+    var message = remaining.toString() + ' characters remaining';
+    var invalid = remaining < 0;
+    
+    textarea.classList.toggle('invalid', invalid);
+    button.disabled = invalid;
+
+    counter.textContent = message;    
+  }
+  
+  textarea.addEventListener('keyup', updateCounter);
+  
+  updateCounter();
+});
+
+You can't add an event listener to an element until the DOM is ready, which means that you must wait until the DOMContentLoaded event fires.
+You must add event handlers manually when you add new elements to the page after DOMContentLoaded fires.
+Adding handlers to many elements can be slow, and can lead to complicated, difficult to maintain code. Imagine a page with a large spreadsheet-like grid with hundreds or thousands of cells; you must provide listeners for both keyboard and mouse events in every cell.
+A technique called event delegation provides a solution for these problems, but before we can learn how to use it, we first need to talk about capturing and bubbling. We'll discuss event delegation later in this lesson.
+
+There's more going on in this example than meets the eye, though. The browser fires all these events on every element that contains the input element, twice: before and after each event triggers on the input element. The browser starts by firing the event on the global window object, then the document object, and on each element it encounters on its way down the DOM tree to the input element. This process is the capturing phase. The target phase occurs when the event fires on the input element. Lastly, the process reverses, and the event fires on each parent element in the bubbling phase, working through containing elements until it fires on window. The process looks like this:
+
+Since the capturing phase happens before the bubbling phase, event handlers defined for the capturing phase will fire before handlers defined for the bubbling phase.
+
+Capturing vs. Bubbling
+
+As a general rule, you should define event listeners for the bubbling phase of events. It does not require the useCapture argument since this argument defaults to false. Most code you write will work in this way.
+
+We covered the capturing phase to provide a complete picture of how event dispatch works within the browser. While you won't often use it, you should be aware of the capturing phase should you encounter it.
+
+Historical Note
+
+At one time, Netscape and most other browsers used capturing when processing events. As usual, Microsoft took a different approach and used bubbling. In fact, Microsoft didn't support the capturing phase at all until Internet Explorer version 9. As it happens, Microsoft's bubbling approach proved to be the preferred way to handle events.
+
+function turnRed(event) {
+  event.currentTarget.style.background = 'red';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.outer').addEventListener('click',  turnRed);    
+  document.querySelector('.inner').addEventListener('click',  turnRed);
+}); 
+
+function turnRed(event) {
+  event.stopPropagation();
+  event.currentTarget.style.background = 'red';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.outer').addEventListener('click',  turnRed);    
+  document.querySelector('.inner').addEventListener('click',  turnRed);
+}, true); 
+
+Preventing Default Behaviors
+
+Another useful method on Event objects is preventDefault(). This method tells the browser that it shouldn't perform any actions that it might otherwise perform in response to a user's action. For instance, clicking a link typically loads a new page in the browser. preventDefault() tells the browser not do that.
+
+It's good practice to call preventDefault() or stopPropagation() as soon as possible in an event handler. Doing so emphasizes the presence of those methods to people reading the code. It also ensures that errors that these methods run before any errors occur; not running these methods before an error occurs can lead to unexpected behavior that is hard to debug.
+
+function clickHandler(event) {
+  var message = document.getElementById('message');
+  message.textContent = event.target.textContent + " was clicked!";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var buttons = document.querySelectorAll('button');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', clickHandler);
+  }
+});
+
+Modern web pages often add new elements after the page finishes loading. Here, we're binding the event listeners to elements that already exist when the finishes loading. Any elements added later, though, won't have those event handlers. Instead, the developer must explicitly add listeners to new Elements as the application adds them.
+
+Attaching many listeners to a document has a cost in performance and memory. For our eight buttons, this overhead is negligible, but imagine a spreadsheet application with thousands of cells, each of which needs several event handlers. You now have to register thousands of listeners, which can cause the page to "freeze" while JavaScript creates them.
+
+Event delegation takes advantage of event bubbling to address these problems. Instead of adding listeners to every element you're watching, you can add a single handler to any of their parents. The listener, in turn, performs the required actions for each element.
+
+Our simple example lets us attach the single event handler directly to document, which means we don't have to wait until the DOM is ready. Within the handler, we can determine which DOM element triggered the event using event.target:
+
+The trade-off of delegation is that the listener may become complicated if it must handle multiple situations. Consider the following variation of the button clicker example that uses both buttons and links. We must treat them differently, depending on which was clicked:
+
+Even with merely two cases, our code is noticeably more complex, yet we only have to check the tag name and perform a simple action. In a large document, there may be many different situations; imagine the complexity that may result from even a dozen cases.
+
+When To Use Event Delegation
+
+The best approach is to start by binding event handlers directly to elements when a project is new and small. As the code grows in size and complexity, delegation may make sense to reduce the number of event handlers required. Keep in mind that you don't need to use document as the delegator: you can use any parent element of the elements you're watching to delegate events. You can even have more than one delegator element if it makes sense.
+
+jQuery, which we'll look at in an upcoming lesson, includes functionality that makes delegation comparatively easy while avoiding the complexity drawback.
+
+document.addEventListener('DOMContentLoaded', function() {
+  var answer = Math.floor(Math.random() * 100) + 1;
+  var input = document.querySelector('#guess');
+  var form = document.querySelector('form');
+  var paragraph;
+
+  form.addEventListener('submit', function(event) {
+	  event.preventDefault();
+
+	  var guess = parseInt(input.value, 10);
+	  var message;
+
+	  if (guess === answer) {
+	    message = 'You guessed it!';
+	  } else if (guess > answer) {
+	    message = 'My number is lower than ' + String(guess);
+	  } else {
+	    message = 'My number is higher than ' + String(guess);
+	  }
+
+	  paragraph = document.querySelector('p');
+	  paragraph.textContent = message;
+	});
+  var link = document.querySelector('a');
+  link.addEventListener('click', function(event) {
+    answer = Math.floor(Math.random() * 100) + 1;
+  	paragraph.textContent = "Guess a number from 1 to 100";
+  });
+});
+
+var cursorInterval;
+var focusedTextField;
+
+document.addEventListener('DOMContentLoaded', function() {
+  var textField = document.querySelector('.text-field');
+
+  textField.addEventListener('click', function(event) {
+    event.stopPropagation();
+
+    focusedTextField = textField;
+    textField.classList.add('focused');
+
+    cursorInterval = setInterval(function() {
+      textField.classList.toggle('cursor');
+    }, 500);
+  });
+});
+
+document.addEventListener('keyup', function(event) {
+  if (focusedTextField) {
+    var contentDiv = focusedTextField.querySelector('.content');
+    if (event.which === 8) {
+      contentDiv.textContent = contentDiv.textContent.substr(0, contentDiv.textContent.length - 1);
+    } else if (event.key.length === 1) {
+      contentDiv.textContent = contentDiv.textContent + event.key;
+    }
+  }
+});
+
+document.addEventListener('click', function(event) {
+  clearInterval(cursorInterval);
+  if (focusedTextField) {
+    focusedTextField.classList.remove('focused');
+    focusedTextField.classList.remove('cursor');
+    focusedTextField = null;
+  }
+});
+
+
+setTimeout(callback, delay) invokes a Function after the specified number of milliseconds.
+
+setInterval(callback, delay) invokes a Function repeatedly in intervals of some specified number of milliseconds. clearInterval clears the interval and prevents future invocations of the Function.
+
+An event is an object that represents some occurrence and contains a variety of information about what and where it happened. The browser triggers some events as it loads a page and when it accomplishes some actions directed by an application. The user also triggers events when he interacts with the page.
+
+Code that must access the DOM should be invoked after the DOMContentLoaded event fires on document.
+
+User events drive most user interfaces and can result from a user interacting with the keyboard, mouse, touchscreen, window, and other devices. Examples of these user events are click, mouseover, keydown, and scroll.
+
+Event listeners are callbacks that the browser will invoke when a matching event occurs.
+
+element.addEventListener registers an event listener. You can also use specific GlobalEventHandlers like element.onclick, to register an event handler.
+
+The Event object provides the useful properties type, target, and currentTarget.
+
+Keyboard events have properties which and key (and others) that describe the keys the user pressed. Mouse events similarly provide button, clientX, and clientY.
+
+There are three phases to firing events: capturing, target, and bubbling.
+
+event.preventDefault() prevents default browser behavior in response to an event. event.stopPropagation() stops the current capturing or bubbling phase, which prevents the event from firing on containing or contained elements.
+
+Event delegation is a technique used to handle events triggered by multiple elements using a single event handler.
+
+- nauczyc sie teorii
+- zapamietac komendy
+- zapamietac zadania

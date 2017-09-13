@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Dynamic Animations</title>
+	<link rel="stylesheet" type="text/css" href="canvas.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="dynamic_animations.js"></script>
+</head>
+<body>
+	<main>
+		<div id="canvas">
+		</div>
+		<p>
+			<a href="#" id="animate">Start</a>
+			|
+			<a href="#" id="stop">Stop</a>
+		</p>
+		<form action="" method="post">
+			<fieldset>
+				<h1>Add a shape</h1>
+				<h2>Type</h2>
+				<ul>
+					<li><label><input type="radio" name="shape_type" value="square" />Square</label></li>
+					<li><label><input type="radio" name="shape_type" value="circle" />Circle</label></li>
+					<li><label><input type="radio" name="shape" value="shapeś">Shape</label></li>
+				</ul>
+				<dl>
+					<dt>
+						<label for="start_x">Starting Point</label>
+					</dt>
+					<dd>
+						<input type="number" name="start_x" placeholder="x:" />
+						<input type="number" name="start_y" placeholder="y:">
+					</dd>
+					<dt>
+						<label for="end_x">Ending Point</label>
+					</dt>
+					<dd>
+						<input type="number" name="end_x" placeholder="x:">
+						<input type="number" name="end_y" placeholder="y:">
+					</dd>
+				</dl>
+				<input type="submit" value="Add">
+			</fieldset>
+		</form>
+	</main>
+</body>
+</html>
