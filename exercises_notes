@@ -1,0 +1,95 @@
+http://d3905n0khyu9wc.cloudfront.net/arithmetic_calculator/index.html
+
+  $("form").on("submit", function(e) {
+    var $form = $(e.target),
+        numerator = +$form.find("#numerator").val(),
+        denominator = +$form.find("#denominator").val(),
+        operator = $form.find("#operator").val(),
+        result = 0;
+}
+
+http://d3905n0khyu9wc.cloudfront.net/grocery_list/index.html
+
+    $f.get(0).reset();
+
+https://d3jtzah944tvom.cloudfront.net/lesson_5/company_site_responsive_breakpoints/team.html
+
+	 $e.siblings(".modal").css({
+      top: $(window).scrollTop() + 30
+    });
+    $e.nextAll("div").fadeIn(400);
+
+
+  $(".modal_layer, a.close").on("click", function(e) {
+    e.preventDefault();
+
+    $(".modal_layer, .modal").filter(":visible").fadeOut(400);
+  });
+
+file:///home/oses32/Pulpit/220/jQuery/Assignment:%20Photo%20Gallery%20Slideshow.html
+
+  $nav.on("click", "a", function(e) {
+    e.preventDefault();
+    var $li = $(e.currentTarget).closest("li"),
+        idx = $li.index();
+
+    $slideshow.find("figure").stop().filter(":visible").fadeOut(300);
+    $slideshow.find("figure").eq(idx).delay(300).fadeIn(300);
+    $nav.find(".active").removeClass("active");
+    $li.addClass("active");
+  });
+
+https://d186loudes4jlv.cloudfront.net/fe2/assignment_search_filtering/index.html
+
+całe
+
+file:///home/oses32/Launch/220/comic/index.html
+
+	function startAnimation() {
+		$blinds.each(function(i) {
+			var $blind = $blinds.eq(i);
+			$blind.delay(1500 * i + 250).animate({
+				top: "+=" + $blind.height(),
+				height: 0
+			}, 250);
+		});
+	}
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/01_exotic_animals_tooltip/index.html
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/02_more_button/index.html
+
+
+    $langDiv.attr('data-lang', lang.name);
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/03_todos_with_confirm/index.html
+
+całe i template
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/04_context_menu/index.html
+
+    this.$confirm.add('.overlay').fadeIn(300);
+
+      displayContextMenu: function(id, coords) {
+    this.hideContextMenu();
+    this.$contextMenu.html(this.contextMenuTemplate({id: id}));
+    this.$contextMenu.fadeIn(300);
+    this.$contextMenu.offset(coords);
+    this.$contextMenu.one('click', '.remove', this.handleDeleteClick.bind(this));
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/06_car_filter_smart_select/index.html
+
+template
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/07_stopwatch/index.html
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/08_calculator/index.html
+
+https://dbdwvr6p7sskw.cloudfront.net/js-exercises/mini_projects/misc_gui_projects/09_rich_text_editor/index.html
+
+https://codepen.io/freeCodeCamp/pen/ONjoLe?editors=0010
+https://medium.com/@ekogoca/how-i-made-random-quote-machine-dd2933360c95
+Ajax
+
+file:///home/oses32/Launch/220/photo_gallery_2/public/index.html
+
